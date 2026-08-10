@@ -1,16 +1,16 @@
 configuration:
   internal_target_host:
     name: Intern destinationsvärd
-    description: Värdnamn att vidarebefordra alla interna anrop till
+    description: Värdnamn att vidarebefordra alla interna anrop till - det lokala värdnamnet HA-servern lyssnar på. 
   internal_target_port:
     name: Intern destinationsport
-    description: Port att vidarebefordra alla interna anrop till
+    description: Port att vidarebefordra alla interna anrop till - portnumret som HA-servern lyssnar på lokalt, utan någon vidarebefordring i en brandvägg eller liknande. Se till att radera den här porten från nätverkskonfigurationen nedan.
   external_target_host:
     name: Extern destinationsvärd
-    description: Värdnamn att vidarebefordra alla externa anrop till
+    description: Värdnamn att vidarebefordra alla externa anrop (från Internet) till. Om du använder HA Cloud eller någon liknande tjänst, ange det värdnamnet.
   external_target_port:
     name: Extern destinationsport
-    description: Port att vidarebefordra alla externa anrop till
+    description: Port att vidarebefordra alla externa anrop till. Det här är porten klienter på Internet använder för att nå servern på utsidan av din brandvägg eller router. Oftast inte samma som den interna porten, så det kolliderar oftast inte med nätverkskonfigurationen nedan. Om du använder HA Cloud eller någon liknande tjänst, ange det portnumret (förmodligen 443).
   use_ssl:
     name: Använd SSL
-    description: Vidarebefordra till https:// istället för http://. Kontrollera att SSL aktiverat på destinationen innan du aktiverar det här.
+    description: Vidarebefordra till https:// istället för http://. Kontrollera att SSL aktiverat i HA-serverns inställningar -> system -> nätverk -> SSL/TLS-konfiguration innan du aktiverar det här.
