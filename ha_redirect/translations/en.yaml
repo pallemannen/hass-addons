@@ -1,7 +1,7 @@
 configuration:
   target_port:
     name: Destination port
-    description: The port Home Assistant actually binds to on this host. Always localhost - this add-on runs alongside Home Assistant on the same machine.
+    description: The local port that Home Assistant is listening to on this server.
   listen_ports:
-    name: Listen ports
-    description: Comma-separated list of ports to listen on, each forwarded to the destination port (e.g. 80,8080,443,8443,8123). Invalid entries and any port matching the destination port are automatically skipped.
+    name: Listener ports
+    description: Comma-separated list of ports to listen on, each forwarded to the destination port above. Example: "80,8080,443,8443,8123". Invalid entries and any port matching the destination port or already taken by other processes are automatically skipped.
