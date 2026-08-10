@@ -20,10 +20,15 @@ host/port options to the same values.
 ## Configuration
 
 ### `internal_target_host` / `internal_target_port`
-Where LAN clients get redirected.
+Where LAN clients get redirected. `internal_target_port` should be the port
+Home Assistant actually binds to *locally* on this host - not a port
+forwarding target.
 
 ### `external_target_host` / `external_target_port`
-Where non-LAN clients get redirected.
+Where non-LAN clients get redirected. `external_target_port` is the port
+people use to reach you from *outside* your firewall, after any port
+forwarding (e.g. 443) - this is frequently different from the internal
+port, and does not bind anything locally.
 
 ### `use_ssl`
 When enabled, redirects use `https://` instead of `http://` (applies to
@@ -34,30 +39,37 @@ otherwise you'll redirect users to a connection that doesn't exist.
 ## Port collisions - read before enabling ports
 
 This add-on can listen on five common ports: 80, 8080, 443, 8443, and 8123.
-Each is independently enabled, disabled, or remapped in the **Network**
-section below Options.
+Each row in the **Network** section below Options is an editable port-number
+field, not a checkbox - to disable a specific listener entirely, clear that
+field so it's blank rather than entering a port number.
 
-**Neither `internal_target_port` nor `external_target_port` can also be
-enabled here.** If Home Assistant already has that port bound on this host,
-this add-on will fail to start with a port-conflict error. This is not a
-rare edge case:
+**`internal_target_port` cannot also be enabled here.** That's the port
+Home Assistant actually binds to on this host directly. If Home Assistant
+already has that port bound, this add-on will fail to start with a
+port-conflict error. This is not a rare edge case:
 
 - Home Assistant's traditional default port is **8123** - one of this
   add-on's five listener options.
 - As of Home Assistant 2026.8.0, new installations default to **port 80**
   instead - also one of this add-on's five listener options.
 
-Before starting this add-on, disable whichever Network-section port(s)
-match your actual Home Assistant port(s). The failure is not silent - the
-add-on simply won't start, and the error will be visible in its log and in
-the Supervisor's add-on list.
+`external_target_port` generally does *not* need to be disabled here - it's
+the port people use from outside your firewall after port forwarding, which
+your router translates, not something bound locally on this host, so it
+typically doesn't collide with anything.
+
+Before starting this add-on, clear (blank out) whichever Network-section
+port field matches your `internal_target_port`. The failure is not silent -
+the add-on simply won't start, and the error will be visible in its log and
+in the Supervisor's add-on list.
 
 ## Installation
 
 1. Set `internal_target_host`/`internal_target_port` to where LAN clients
-   should land
+   should land, matching where Home Assistant actually binds locally
 2. Set `external_target_host`/`external_target_port` to where everyone else
    should land (can match step 1 if you don't need a distinction)
 3. Enable `use_ssl` only if HTTPS is actually configured on those destinations
-4. In the Network section, disable any port that matches either target port
+4. In the Network section, clear (leave blank) whichever port field matches
+   your `internal_target_port`
 5. Start the add-on
