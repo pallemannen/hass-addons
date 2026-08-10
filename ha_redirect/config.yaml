@@ -9,15 +9,10 @@ arch:
 init: false
 startup: services
 boot: auto
-ports:
-  80/tcp: 80
-  8080/tcp: 8080
-  443/tcp: 443
-  8443/tcp: 8443
-  8123/tcp: 8123
+host_network: true
 options:
-  target_host: "homeassistant.local"
   target_port: 8123
+  listen_ports: "80,8080,443,8443,8123"
 schema:
-  target_host: str
   target_port: port
+  listen_ports: str
