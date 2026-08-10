@@ -1,0 +1,10 @@
+configuration:
+  target_host:
+    name: Destination host
+    description: Hostname to redirect all requests to
+  target_port:
+    name: Destination port
+    description: Port to redirect all requests to
+  use_ssl:
+    name: Use SSL
+    description: Redirect to https:// instead of http://. Make sure SSL is actually configured on the destination before enabling this.
