@@ -1,16 +1,16 @@
 configuration:
   internal_target_host:
     name: Internal destination host
-    description: Hostname to redirect LAN clients to
+    description: Hostname to redirect LAN clients to - wherever Home Assistant actually lives locally.
   internal_target_port:
     name: Internal destination port
-    description: Port to redirect LAN clients to
+    description: The port Home Assistant actually binds to locally on this host (not through any port forwarding). Make sure to remove this port from the network section below.
   external_target_host:
     name: External destination host
-    description: Hostname to redirect non-LAN clients to
+    description: Hostname to redirect external (Internet) clients to. If you are using HA Cloud or any similar service, specify that hostname.
   external_target_port:
     name: External destination port
-    description: Port to redirect non-LAN clients to
+    description: The port external clients use to reach the server from outside your firewall/router, before any port forwarding. Often different from the internal port, and does not bind locally, so it does not usually collide with the Network section below. If you are using HA Cloud or any similar service, specify that port number (usually 443).
   use_ssl:
     name: Use SSL
-    description: Redirect to https:// instead of http://. Make sure SSL is actually configured on the destination before enabling this.
+    description: Redirect to https:// instead of http://. Make sure SSL is actually configured in the local HA settings -> system -> network -> SSL/TLS configuration before enabling this.
