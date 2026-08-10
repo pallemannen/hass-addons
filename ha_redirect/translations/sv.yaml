@@ -1,0 +1,10 @@
+configuration:
+  target_host:
+    name: Destinationsvärd
+    description: Värdnamn att vidarebefordra alla anrop till
+  target_port:
+    name: Destinationsport
+    description: Port att vidarebefordra alla anrop till
+  use_ssl:
+    name: Använd SSL
+    description: Vidarebefordra till https:// istället för http://. Kontrollera att SSL aktiverat på destinationen innan du aktiverar det här.
