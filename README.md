@@ -13,7 +13,8 @@ A collection of Home Assistant Supervisor add-ons.
 ### [HA Redirect](ha_redirect/DOCS.md)
 
 Listens on common web ports (80, 8080, 443, 8443, 8123) and issues an HTTP
-301 redirect to wherever your actual Home Assistant instance lives. See
+301 redirect to your actual Home Assistant instance - internal or external
+clients get routed to different destinations automatically. See
 [ha_redirect/DOCS.md](ha_redirect/DOCS.md) for configuration, including an
 important note about port collisions with Home Assistant itself.
 
