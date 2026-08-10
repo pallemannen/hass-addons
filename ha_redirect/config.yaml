@@ -1,7 +1,7 @@
 name: HA Redirect
-version: "1.0.2"
+version: "1.1.0"
 slug: ha_redirect
-description: Minimal HTTP/HTTPS redirect to a destination host
+description: Minimal HTTP/HTTPS redirect to Home Assistant, internal or external aware
 url: https://github.com/pallemannen/hass-addons/tree/main/ha_redirect
 arch:
   - aarch64
@@ -18,10 +18,14 @@ ports:
 map:
   - ssl:ro
 options:
-  target_host: "homeassistant.local"
-  target_port: 8123
+  internal_target_host: "homeassistant.local"
+  internal_target_port: 8123
+  external_target_host: "homeassistant.local"
+  external_target_port: 8123
   use_ssl: true
 schema:
-  target_host: str
-  target_port: port
+  internal_target_host: str
+  internal_target_port: port
+  external_target_host: str
+  external_target_port: port
   use_ssl: bool
