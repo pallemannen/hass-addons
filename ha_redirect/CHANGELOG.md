@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.0
+- BREAKING: replaced `target_host`/`target_port` with separate
+  `internal_target_host`/`internal_target_port` and
+  `external_target_host`/`external_target_port`, so LAN and non-LAN
+  clients can be redirected to different destinations
+- Added source-IP-based LAN detection (private ranges vs everything else)
+
 ## 1.0.2
 - Added `use_ssl` option to control redirect scheme
 - Added configurable listener ports: 80, 8080, 443, 8443, 8123 (independently
