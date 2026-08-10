@@ -1,10 +1,16 @@
 configuration:
-  target_host:
-    name: Destination host
-    description: Hostname to redirect all requests to
-  target_port:
-    name: Destination port
-    description: Port to redirect all requests to
+  internal_target_host:
+    name: Internal destination host
+    description: Hostname to redirect LAN clients to
+  internal_target_port:
+    name: Internal destination port
+    description: Port to redirect LAN clients to
+  external_target_host:
+    name: External destination host
+    description: Hostname to redirect non-LAN clients to
+  external_target_port:
+    name: External destination port
+    description: Port to redirect non-LAN clients to
   use_ssl:
     name: Use SSL
     description: Redirect to https:// instead of http://. Make sure SSL is actually configured on the destination before enabling this.
