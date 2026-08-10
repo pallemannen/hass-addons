@@ -1,15 +1,9 @@
 #!/usr/bin/with-contenv bashio
-export INTERNAL_HOST=$(bashio::config 'internal_target_host')
-export INTERNAL_PORT=$(bashio::config 'internal_target_port')
-export EXTERNAL_HOST=$(bashio::config 'external_target_host')
-export EXTERNAL_PORT=$(bashio::config 'external_target_port')
+TARGET_HOST=$(bashio::config 'target_host')
+TARGET_PORT=$(bashio::config 'target_port')
 
-if bashio::config.true 'use_ssl'; then
-    export SCHEME="https"
-else
-    export SCHEME="http"
-fi
+for PORT in 80 8080 443 8443 8123; do
+    socat TCP-LISTEN:${PORT},fork,reuseaddr TCP:${TARGET_HOST}:${TARGET_PORT} &
+done
 
-envsubst '${SCHEME} ${INTERNAL_HOST} ${INTERNAL_PORT} ${EXTERNAL_HOST} ${EXTERNAL_PORT}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
-
-nginx -g "daemon off;"
+wait
