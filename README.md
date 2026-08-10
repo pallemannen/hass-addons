@@ -1,2 +1,22 @@
-# hass-redirect
-Simple redirect for Home Assistant, making it listen to ports 80, 443, 8080, 8443 and 8123 simultaneously.
+# Home Assistant Add-ons
+
+A collection of Home Assistant Supervisor add-ons.
+
+## Installation
+
+1. Settings -> Add-ons -> Add-on Store -> (menu) -> Repositories
+2. Add `https://github.com/pallemannen/hass-addons`
+3. Install whichever add-on(s) you want from the store
+
+## Add-ons
+
+### [HA Redirect](ha_redirect/DOCS.md)
+
+Listens on common web ports (80, 8080, 443, 8443, 8123) and issues an HTTP
+301 redirect to wherever your actual Home Assistant instance lives. See
+[ha_redirect/DOCS.md](ha_redirect/DOCS.md) for configuration, including an
+important note about port collisions with Home Assistant itself.
+
+## License
+
+MIT - see [LICENSE](LICENSE).
