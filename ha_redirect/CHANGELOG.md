@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1
+- Fixed a bug reading the configuration options.
+
 ## 1.1.0
 - Added the ability to redirect ports to other hosts than localhost.
 - Added the ability to have several simultaneous rules, since HA does
