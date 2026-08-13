@@ -9,10 +9,10 @@ is_valid_port() {
 
 CONFIG=$(bashio::app.config)
 
-while IFS= read -r FORWARD; do
-    TARGET_HOST=$(bashio::jq "${FORWARD}" '.target_host')
-    TARGET_PORT=$(bashio::jq "${FORWARD}" '.target_port')
-    SOURCE_PORTS=$(bashio::jq "${FORWARD}" '.source_ports')
+while IFS= read -r FORWARDER; do
+    TARGET_HOST=$(bashio::jq "${FORWARDER}" '.target_host')
+    TARGET_PORT=$(bashio::jq "${FORWARDER}" '.target_port')
+    SOURCE_PORTS=$(bashio::jq "${FORWARDER}" '.source_ports')
 
     IFS=',' read -ra PORTS <<< "$SOURCE_PORTS"
     for PORT in "${PORTS[@]}"; do
@@ -34,6 +34,6 @@ while IFS= read -r FORWARD; do
         ) &
         bashio::log.info "Forwarding ${PORT} -> ${TARGET_HOST}:${TARGET_PORT}"
     done
-done < <(bashio::jq "${CONFIG}" '.forwards[]')
+done < <(bashio::jq "${CONFIG}" '.forwarders[]')
 
 wait
