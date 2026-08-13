@@ -12,10 +12,14 @@ A collection of Home Assistant Supervisor add-ons.
 
 ### [HA Redirect](ha_redirect/DOCS.md)
 
-A blind TCP port forwarder - listens on as many ports as you configure and
-relays all traffic straight to Home Assistant's real port on the same
-host. Perfect for post-2026.8.0 users migrating from port 8123 to port 80.
-See [ha_redirect/DOCS.md](ha_redirect/DOCS.md) for configuration.
+HA Redirect
+HA Redirect is a general purpose port forwarder for Home Assistant.
+
+It's the perfect tool if you are transitioning from port 8123 to post-2026.8.0 port 80 - This tool can make HA listen to both ports simultaneously, by forwarding port 8123 to localhost port 80.
+
+You can also use it to forward any port anywhere, as long as the source port is not already claimed.
+
+See [ha_redirect/DOCS.md](ha_redirect/DOCS.md) for details and configuration.
 
 ## License
 
