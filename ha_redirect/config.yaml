@@ -11,12 +11,12 @@ startup: services
 boot: auto
 host_network: true
 options:
-  forwards:
+  forwarders:
     - target_host: "localhost"
       target_port: 8123
       source_ports: "80,8080,443,8443,8123"
 schema:
-  forwards:
+  forwarders:
     - target_host: str
       target_port: port
       source_ports: str
