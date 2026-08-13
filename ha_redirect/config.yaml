@@ -12,7 +12,9 @@ boot: auto
 host_network: true
 options:
   target_port: 8123
+  target_host: "localhost"
   listen_ports: "80,8080,443,8443,8123"
 schema:
   target_port: port
+  target_host: str
   listen_ports: str
