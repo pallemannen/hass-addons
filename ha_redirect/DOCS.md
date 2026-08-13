@@ -6,6 +6,9 @@ It's the perfect tool if you are transitioning from port 8123 to
 post-2026.8.0 port 80 - This tool can make HA listen to both ports 
 simultaneously, by forwarding port 8123 to localhost port 80.
 
+You can also use it to forward any port anywhere, as long as the
+source port is not already claimed.
+
 ## Installation
 
 1. Add repo https://github.com/pallemannen/hass-addons to Home Assistant
@@ -18,21 +21,19 @@ simultaneously, by forwarding port 8123 to localhost port 80.
 A list of forwarding rules. Each has:
 - **`target_host`** - where to relay traffic to. `localhost` for Home
   Assistant itself (the traditional use case), or any other reachable
-  hostname/IP (e.g. a DSM box) to relay elsewhere.
+  hostname/IP to relay elsewhere.
 - **`target_port`** - the port on `target_host` that actually serves the
   traffic.
-- **`listen_ports`** - comma-separated list of ports to listen on for this
+- **`source_ports`** - comma-separated list of ports to listen on for this
   rule, each forwarded to `target_host:target_port`.
 
 Add or remove rules with the +/- controls in the add-on's Configuration tab.
-Each rule is independent - one might forward HA's own ports to `localhost`,
-another might forward DSM's ports to `caja.home.pal.pp.se`, and so on.
+Each rule is independent of the other ones.
 
 If a listen port matches its own rule's `target_port` on `localhost`/
 `127.0.0.1`, it's skipped (forwarding a port to itself is pointless, and if
 Home Assistant already has that port bound, binding it here would fail
 anyway).
-
 
 Invalid entries (anything that isn't a valid port number 1-65535) are
 silently skipped before ever being used. If a valid port is already bound
@@ -47,9 +48,3 @@ scheme redirects. Whatever protocol you connect with passes through
 unchanged. If you use the wrong scheme for what Home Assistant actually
 expects on that port, the connection will simply fail rather than redirect
 you - that's expected, not a bug.
-
-## Installation
-
-1. Set `target_port` to Home Assistant's real port
-2. Set `listen_ports` to whatever ports you want reachable (comma-separated)
-3. Start the add-on
