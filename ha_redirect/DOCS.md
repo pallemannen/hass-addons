@@ -17,7 +17,7 @@ source port is not already claimed.
  
 ## Configuration
 
-### `forwards`
+### `forwarders`
 A list of forwarding rules. Each has:
 - **`target_host`** - where to relay traffic to. `localhost` for Home
   Assistant itself (the traditional use case), or any other reachable
