@@ -1,8 +1,14 @@
 configuration:
-  target_port:
-    name: Destinationsport
-    description: Den lokala port som Home Assistant lyssnar på på den här servern.
-  listen_ports:
-    name: Källportar
-    description: Kommaseparerad lista med portar att lyssna på, allihop vidarebefordrade till destinationsporten ovan. Exempel: "80,8080,443,8443,8123". Ogiltiga portar, destinationsporten ovan och eventuella andra portar som redan används av andra processer ignoreras automatiskt.
- 
+  forwarders:
+    name: Portomstyrningar
+    description: Varje omstyrning lyssnar på en eller flera portar, och vidarebefordrar all trafik till en enda server och port.
+    fields:
+      target_host:
+        name: Destinationsserver
+        description: Den server som trafiken ska vidarebefordras till - "localhost" eller "127.0.0.1" för Home Assistant, eller valfri annat värdnamn eller IP-adress.
+      target_port:
+        name: Destinationsport
+        description: Den port som destinationsservern lyssnar på.
+      source_ports:
+        name: Portar att styra om
+        description: Komma-separerad lista med portar att lyssna på (till exempel "80, 443, 8443").
