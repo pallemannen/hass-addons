@@ -11,4 +11,4 @@ configuration:
         description: Den port som destinationsservern lyssnar på.
       source_ports:
         name: Portar att styra om
-        description: Komma-separerad lista med portar att lyssna på (till exempel "80, 443, 8443").
+        description: Komma-separerad lista med portar att lyssna på, till exempel "80, 443, 8443".
