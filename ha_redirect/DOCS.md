@@ -12,7 +12,7 @@ source port is not already claimed.
 ## Installation
 
 1. Add repo https://github.com/pallemannen/hass-addons to Home Assistant
-   -> Settings -> Apps -> Install app -> three-dot menu -> Repositories.
+   -> Settings -> Apps -> "Install app" -> three-dot menu -> Repositories.
 2. Search for HA Redirect in the App store and click "Install".
  
 ## Configuration
