@@ -1,18 +1,25 @@
 # HA Redirect
 
-Blind TCP port forwarder that runs on the host's own network (no Docker
-port-mapping layer) and relays traffic from any number of listener ports
-straight to Home Assistant's real port on the same machine.
+HA Redirect is a general purpose port forwarder for Home Assistant.
 
-Because this add-on shares the host's network directly, there's no
-separate "destination host" to configure - it's always this machine.
+It's the perfect tool if you are transitioning from port 8123 to 
+post-2026.8.0 port 80 - This tool can make HA listen to both ports 
+simultaneously, by forwarding port 8123 to localhost port 80.
 
+## Installation
+
+1. Add repo https://github.com/pallemannen/hass-addons to Home Assistant
+   -> Settings -> Apps -> Install app -> three-dot menu -> Repositories.
+2. Search for HA Redirect in the App store and click "Install".
+ 
 ## Configuration
 
+### `target_host`
+The host all traffic will be forwarded to. Default is localhost - 
+i.e. Home Assistant.
+
 ### `target_port`
-The port Home Assistant actually binds to on this host - its real port.
-8123 is the traditional default; new installations from Home Assistant
-2026.8.0 onward default to port 80 instead.
+The port all traffic will be forwarded to.
 
 ### `listen_ports`
 Comma-separated list of ports to listen on, each forwarded to
