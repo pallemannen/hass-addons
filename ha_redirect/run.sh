@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bashio
 TARGET_PORT=$(bashio::config 'target_port')
+TARGET_HOST=$(bashio::config 'target_host')
 LISTEN_PORTS=$(bashio::config 'listen_ports')
 
 is_valid_port() {
@@ -24,10 +25,10 @@ for PORT in "${PORTS[@]}"; do
     fi
 
     (
-        socat TCP-LISTEN:${PORT},fork,reuseaddr TCP:127.0.0.1:${TARGET_PORT}
+        socat TCP-LISTEN:${PORT},fork,reuseaddr TCP:${TARGET_HOST}:${TARGET_PORT}
         bashio::log.warning "Listener on port ${PORT} exited (likely already in use by another process) - other ports are unaffected"
     ) &
-    bashio::log.info "Forwarding ${PORT} -> 127.0.0.1:${TARGET_PORT}"
+    bashio::log.info "Forwarding ${PORT} -> ${TARGET_HOST}:${TARGET_PORT}"
 done
 
 wait
