@@ -14,22 +14,25 @@ simultaneously, by forwarding port 8123 to localhost port 80.
  
 ## Configuration
 
-### `target_host`
-The host all traffic will be forwarded to. Default is localhost - 
-i.e. Home Assistant.
+### `forwards`
+A list of forwarding rules. Each has:
+- **`target_host`** - where to relay traffic to. `localhost` for Home
+  Assistant itself (the traditional use case), or any other reachable
+  hostname/IP (e.g. a DSM box) to relay elsewhere.
+- **`target_port`** - the port on `target_host` that actually serves the
+  traffic.
+- **`listen_ports`** - comma-separated list of ports to listen on for this
+  rule, each forwarded to `target_host:target_port`.
 
-### `target_port`
-The port all traffic will be forwarded to.
+Add or remove rules with the +/- controls in the add-on's Configuration tab.
+Each rule is independent - one might forward HA's own ports to `localhost`,
+another might forward DSM's ports to `caja.home.pal.pp.se`, and so on.
 
-### `listen_ports`
-Comma-separated list of ports to listen on, each forwarded to
-`target_port` (e.g. `80,8080,443,8443,8123`). Any number of ports, any
-values - not limited to a fixed set.
+If a listen port matches its own rule's `target_port` on `localhost`/
+`127.0.0.1`, it's skipped (forwarding a port to itself is pointless, and if
+Home Assistant already has that port bound, binding it here would fail
+anyway).
 
-If a listed port matches `target_port`, it's automatically skipped (a line
-is logged noting this, not a hard failure) - forwarding a port to itself
-would be pointless, and if Home Assistant already has that port bound,
-trying to also bind it here would fail anyway.
 
 Invalid entries (anything that isn't a valid port number 1-65535) are
 silently skipped before ever being used. If a valid port is already bound
