@@ -7,7 +7,8 @@ is_valid_port() {
     [ "$1" -ge 1 ] && [ "$1" -le 65535 ]
 }
 
-CONFIG=$(bashio::app.config)
+# CONFIG=$(bashio::app.config)
+CONFIG="/data/options.json"
 
 while IFS= read -r FORWARDER; do
     TARGET_HOST=$(bashio::jq "${FORWARDER}" '.target_host')
