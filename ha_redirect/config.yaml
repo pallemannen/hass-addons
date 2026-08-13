@@ -1,5 +1,5 @@
 name: HA Redirect
-version: "1.1.0"
+version: "1.1.1"
 slug: ha_redirect
 description: Minimal TCP port forwarder for Home Assistant
 url: https://github.com/pallemannen/hass-addons/tree/main/ha_redirect
