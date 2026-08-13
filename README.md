@@ -2,7 +2,11 @@
 
 A collection of Home Assistant Supervisor add-ons.
 
-[![Add repository to my Home Assistant](https://img.shields.io/badge/Add_repository_to_my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fpallemannen%2Fhass-addons)
+[![Open your Home Assistant instance and show the app store with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_store.svg)](https://my.home-assistant.io/redirect/supervisor_store/?repository_url=https%3A%2F%2Fgithub.com%2Fpallemannen%2Fhass-addons)
+
+https://my.home-assistant.io/redirect/supervisor_addon/?addon=ha_redirect&repository_url=https%3A%2F%2Fgithub.com%2Fpallemannen%2Fhass-addons
+
+https://my.home-assistant.io/redirect/supervisor_addon/?addon=eb57207c_ha_redirect&repository_url=https%3A%2F%2Fgithub.com%2Fpallemannen%2Fhass-addons
 
 ## Installation
 
