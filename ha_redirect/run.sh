@@ -1,7 +1,4 @@
 #!/usr/bin/with-contenv bashio
-TARGET_PORT=$(bashio::config 'target_port')
-TARGET_HOST=$(bashio::config 'target_host')
-LISTEN_PORTS=$(bashio::config 'listen_ports')
 
 is_valid_port() {
     case "$1" in
@@ -10,25 +7,33 @@ is_valid_port() {
     [ "$1" -ge 1 ] && [ "$1" -le 65535 ]
 }
 
-IFS=',' read -ra PORTS <<< "$LISTEN_PORTS"
-for PORT in "${PORTS[@]}"; do
-    PORT=$(echo "$PORT" | tr -d '[:space:]')
+CONFIG=$(bashio::app.config)
 
-    if ! is_valid_port "$PORT"; then
-        bashio::log.warning "Ignoring invalid listen port entry: '${PORT}'"
-        continue
-    fi
+while IFS= read -r FORWARD; do
+    TARGET_HOST=$(bashio::jq "${FORWARD}" '.target_host')
+    TARGET_PORT=$(bashio::jq "${FORWARD}" '.target_port')
+    SOURCE_PORTS=$(bashio::jq "${FORWARD}" '.source_ports')
 
-    if [ "$PORT" = "$TARGET_PORT" ]; then
-        bashio::log.warning "Skipping listen port ${PORT} - matches target_port"
-        continue
-    fi
+    IFS=',' read -ra PORTS <<< "$SOURCE_PORTS"
+    for PORT in "${PORTS[@]}"; do
+        PORT=$(echo "$PORT" | tr -d '[:space:]')
 
-    (
-        socat TCP-LISTEN:${PORT},fork,reuseaddr TCP:${TARGET_HOST}:${TARGET_PORT}
-        bashio::log.warning "Listener on port ${PORT} exited (likely already in use by another process) - other ports are unaffected"
-    ) &
-    bashio::log.info "Forwarding ${PORT} -> ${TARGET_HOST}:${TARGET_PORT}"
-done
+        if ! is_valid_port "$PORT"; then
+            bashio::log.warning "Ignoring invalid listen port entry: '${PORT}'"
+            continue
+        fi
+
+        if [ "$PORT" = "$TARGET_PORT" ] && { [ "$TARGET_HOST" = "localhost" ] || [ "$TARGET_HOST" = "127.0.0.1" ]; }; then
+            bashio::log.warning "Skipping listen port ${PORT} - would forward to itself"
+            continue
+        fi
+
+        (
+            socat TCP-LISTEN:${PORT},fork,reuseaddr TCP:${TARGET_HOST}:${TARGET_PORT}
+            bashio::log.warning "Listener on port ${PORT} exited (likely already in use by another process) - other listeners are unaffected"
+        ) &
+        bashio::log.info "Forwarding ${PORT} -> ${TARGET_HOST}:${TARGET_PORT}"
+    done
+done < <(bashio::jq "${CONFIG}" '.forwards[]')
 
 wait
