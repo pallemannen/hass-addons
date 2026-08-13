@@ -1,6 +1,6 @@
 configuration:
   forwarders:
-    name: Port forwardings
+    name: Port forwarding rules
     description: Each rule listens on one or more ports and relays traffic to a single target host:port.
     fields:
       target_host:
@@ -11,4 +11,4 @@ configuration:
         description: The port on the target host that actually serves the traffic.
       source_ports:
         name: Source Ports
-        description: Comma-separated list of ports to listen on for this rule.
+        description: Comma-separated list of ports to listen on for this rule, e.g. "80, 443, 8443".
