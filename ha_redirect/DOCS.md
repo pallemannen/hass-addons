@@ -48,3 +48,8 @@ scheme redirects. Whatever protocol you connect with passes through
 unchanged. If you use the wrong scheme for what Home Assistant actually
 expects on that port, the connection will simply fail rather than redirect
 you - that's expected, not a bug.
+
+## License
+
+MIT - see [LICENSE](LICENSE).
+
