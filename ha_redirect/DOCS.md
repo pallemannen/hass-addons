@@ -49,7 +49,7 @@ unchanged. If you use the wrong scheme for what Home Assistant actually
 expects on that port, the connection will simply fail rather than redirect
 you - that's expected, not a bug.
 
-## No UDP awareness
+## No UDP forwarding
 
 This app is TCP only.
 
