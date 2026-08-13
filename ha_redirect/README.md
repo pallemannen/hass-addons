@@ -1,5 +1,7 @@
 # HA Redirect
 
+[![Open your Home Assistant instance and show the dashboard of an app.](https://my.home-assistant.io/badges/supervisor_addon.svg)](https://my.home-assistant.io/redirect/supervisor_addon/?repository_url=https%3A%2F%2Fgithub.com%2Fpallemannen%2Fhass-addons%2Ftree%2Fmain%2Fha_redirect&addon=ha_redirect)
+
 HA Redirect is a general purpose port forwarder for Home Assistant.
 
 It's the perfect tool if you are transitioning from port 8123 to post-2026.8.0 port 80 - This tool can make HA listen to both ports simultaneously, by forwarding port 8123 to localhost port 80.
