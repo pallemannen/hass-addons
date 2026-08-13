@@ -1,7 +1,7 @@
 name: HA Redirect
-version: "1.0.0"
+version: "1.0.2"
 slug: ha_redirect
-description: Minimal TCP port forward to Home Assistant
+description: Minimal TCP port forwarder for Home Assistant
 url: https://github.com/pallemannen/hass-addons/tree/main/ha_redirect
 arch:
   - aarch64
@@ -11,10 +11,12 @@ startup: services
 boot: auto
 host_network: true
 options:
-  target_port: 8123
-  target_host: "localhost"
-  listen_ports: "80,8080,443,8443,8123"
+  forwards:
+    - target_host: "localhost"
+      target_port: 8123
+      source_ports: "80,8080,443,8443,8123"
 schema:
-  target_port: port
-  target_host: str
-  listen_ports: str
+  forwards:
+    - target_host: str
+      target_port: port
+      source_ports: str
