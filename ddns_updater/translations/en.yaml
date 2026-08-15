@@ -1,0 +1,25 @@
+configuration:
+  tsig_algorithm:
+    name: TSIG Algorithm
+    description: Must match the algorithm of the TSIG key configured on your BIND server, e.g. "hmac-sha256".
+  tsig_keyname:
+    name: TSIG Key Name
+    description: The name of the TSIG key as configured on your BIND server.
+  tsig_secret:
+    name: TSIG Secret
+    description: The base64 secret from "tsig-keygen" on your BIND server.
+  fqdn:
+    name: Record FQDN
+    description: The record this add-on updates, fully qualified with a trailing dot, e.g. "home.dyn.example.com.".
+  zone:
+    name: Zone
+    description: The zone that record lives in, as configured in BIND's update-policy, e.g. "dyn.example.com".
+  bind_server:
+    name: BIND Server
+    description: Your BIND server's IP address. Updates are sent to it directly over port 53.
+  ip_echo_url:
+    name: IP Echo URL
+    description: An HTTP endpoint that echoes back the caller's public IP as plain text.
+  poll_interval:
+    name: Poll Interval
+    description: How often, in seconds, to check for an IP change (minimum 60).
