@@ -16,7 +16,7 @@ configuration:
     description: The zone that record lives in, as configured in your DNS server's update policy. Default: dyn.pal.pp.se.
   dns_server:
     name: DNS Server
-    description: Your DNS server's IP address. Updates are sent to it directly over port 53. Works with any RFC 2136-capable server, not just BIND. No default - required.
+    description: Your DNS server's IP address. Updates are sent to it directly over port 53. No default - required.
   ip_echo_url:
     name: IP Echo URL
     description: An HTTP endpoint that echoes back the caller's public IP as plain text. Default: http://ip.pal.st.

@@ -2,8 +2,7 @@
 
 DDNS Updater polls your current public IP and, when it changes, pushes an
 RFC 2136 dynamic DNS update straight to your own authoritative DNS server -
-BIND, Knot, PowerDNS, Windows DNS Server, or anything else that speaks
-RFC 2136 - no third-party dynamic DNS provider involved.
+no third-party dynamic DNS provider involved.
 
 ## Installation
 
@@ -68,8 +67,7 @@ policy. Default: `dyn.pal.pp.se`.
 ### `dns_server`
 Your DNS server's IP address (a static/public one, since this add-on talks
 to it directly over port 53 - no NAT or DNS lookup involved for this field).
-Works with any RFC 2136-capable server, not just BIND. No default - must
-be set.
+No default - must be set.
 
 ### `ip_echo_url`
 An HTTP endpoint that echoes back the caller's public IP as plain text.

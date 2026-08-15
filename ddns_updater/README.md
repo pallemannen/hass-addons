@@ -4,8 +4,7 @@
 
 DDNS Updater polls your current public IP and, when it changes, pushes an
 RFC 2136 dynamic DNS update straight to your own authoritative DNS server -
-BIND, Knot, PowerDNS, Windows DNS Server, or anything else that speaks
-RFC 2136 - no third-party dynamic DNS provider involved.
+no third-party dynamic DNS provider involved.
 
 See [DOCS.md](DOCS.md) for full configuration details.
 

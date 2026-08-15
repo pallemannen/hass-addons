@@ -16,7 +16,7 @@ configuration:
     description: Zonen som posten tillhör, enligt din DNS-servers update-policy. Standard: dyn.pal.pp.se.
   dns_server:
     name: DNS-server
-    description: IP-adressen till din DNS-server. Uppdateringar skickas direkt dit över port 53. Fungerar med vilken RFC 2136-kompatibel server som helst, inte bara BIND. Inget standardvärde - måste anges.
+    description: IP-adressen till din DNS-server. Uppdateringar skickas direkt dit över port 53. Inget standardvärde - måste anges.
   ip_echo_url:
     name: IP-echo-URL
     description: En HTTP-endpoint som returnerar anroparens publika IP-adress som ren text. Standard: http://ip.pal.st.
