@@ -53,30 +53,34 @@ home.example.com. CNAME home.dyn.example.com.
 ## Configuration
 
 ### `tsig_algorithm` / `tsig_keyname` / `tsig_secret`
-Must match the TSIG key configured on your DNS server exactly - algorithm
-(e.g. `hmac-sha256`), key name, and the base64 secret.
+Must match the TSIG key configured on your DNS server exactly - algorithm,
+key name, and the base64 secret. `tsig_secret` has no default and must be
+set. Defaults: `hmac-sha256` / `ddns-key` / _(none)_.
 
 ### `fqdn`
-The record this add-on updates, e.g. `home.dyn.example.com`. A trailing dot
-isn't required - one is added automatically if missing.
+The record this add-on updates. A trailing dot isn't required - one is
+added automatically if missing. Default: `home.dyn.pal.pp.se.`.
 
 ### `zone`
 The zone that record lives in, as configured in your DNS server's update
-policy (e.g. `dyn.example.com`).
+policy. Default: `dyn.pal.pp.se`.
 
 ### `dns_server`
 Your DNS server's IP address (a static/public one, since this add-on talks
 to it directly over port 53 - no NAT or DNS lookup involved for this field).
-Works with any RFC 2136-capable server, not just BIND.
+Works with any RFC 2136-capable server, not just BIND. No default - must
+be set.
 
 ### `ip_echo_url`
 An HTTP endpoint that echoes back the caller's public IP as plain text.
 Point this at your own service if you have one, or any public "what's my
 IP" endpoint. Must be reachable from wherever this add-on runs.
+Default: `http://ip.pal.st`.
 
 ### `poll_interval`
 How often, in seconds, to check for an IP change (minimum 60). No update is
 sent unless the IP has actually changed since the last check.
+Default: `900`.
 
 ## Security note
 

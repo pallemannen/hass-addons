@@ -1,25 +1,25 @@
 configuration:
   tsig_algorithm:
     name: TSIG-algoritm
-    description: Måste matcha algoritmen för TSIG-nyckeln som är konfigurerad på din DNS-server, t.ex. "hmac-sha256".
+    description: Måste matcha algoritmen för TSIG-nyckeln som är konfigurerad på din DNS-server. Standard: hmac-sha256.
   tsig_keyname:
     name: TSIG-nyckelnamn
-    description: Namnet på TSIG-nyckeln enligt konfigurationen på din DNS-server.
+    description: Namnet på TSIG-nyckeln enligt konfigurationen på din DNS-server. Standard: ddns-key.
   tsig_secret:
     name: TSIG-hemlighet
-    description: Base64-hemligheten (TSIG-nyckeln) konfigurerad på din DNS-server.
+    description: Base64-hemligheten (TSIG-nyckeln) konfigurerad på din DNS-server. Inget standardvärde - måste anges.
   fqdn:
     name: Postens FQDN
-    description: Posten som denna app uppdaterar, t.ex. "home.dyn.example.com". Avslutande punkt krävs inte.
+    description: Posten som denna app uppdaterar. Avslutande punkt krävs inte. Standard: home.dyn.pal.pp.se.
   zone:
     name: Zon
-    description: Zonen som posten tillhör, enligt din DNS-servers update-policy, t.ex. "dyn.example.com".
+    description: Zonen som posten tillhör, enligt din DNS-servers update-policy. Standard: dyn.pal.pp.se.
   dns_server:
     name: DNS-server
-    description: IP-adressen till din DNS-server. Uppdateringar skickas direkt dit över port 53. Fungerar med vilken RFC 2136-kompatibel server som helst, inte bara BIND.
+    description: IP-adressen till din DNS-server. Uppdateringar skickas direkt dit över port 53. Fungerar med vilken RFC 2136-kompatibel server som helst, inte bara BIND. Inget standardvärde - måste anges.
   ip_echo_url:
     name: IP-echo-URL
-    description: En HTTP-endpoint som returnerar anroparens publika IP-adress som ren text.
+    description: En HTTP-endpoint som returnerar anroparens publika IP-adress som ren text. Standard: http://ip.pal.st.
   poll_interval:
     name: Kontrollintervall
-    description: Hur ofta, i sekunder, IP-adressen kontrolleras (minst 60).
+    description: Hur ofta, i sekunder, IP-adressen kontrolleras (minst 60). Standard: 900.
