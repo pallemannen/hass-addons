@@ -86,6 +86,15 @@ The record's TTL is fixed at 300s in the update itself, regardless of your
 zone's default `$TTL`, so IP changes propagate quickly without needing a
 zone-wide TTL change.
 
+## Is this the right add-on for you?
+
+This is for RFC 2136-compatible DNS servers you (or someone) are
+administering. It is **not** for public dynamic DNS providers like
+DuckDNS or Dynu - there are other add-ons for that:
+
+- [Duck DNS](https://github.com/home-assistant/addons/tree/master/duckdns) - official Home Assistant add-on
+- [Dynu DNS](https://community.home-assistant.io/t/add-on-dynu-dns-alternative-to-duckdns/331584) - community add-on
+
 ## License
 
 MIT - see [LICENSE](LICENSE).
