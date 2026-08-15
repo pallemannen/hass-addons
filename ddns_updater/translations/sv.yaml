@@ -1,22 +1,22 @@
 configuration:
   tsig_algorithm:
     name: TSIG-algoritm
-    description: Måste matcha algoritmen för TSIG-nyckeln som är konfigurerad på din BIND-server, t.ex. "hmac-sha256".
+    description: Måste matcha algoritmen för TSIG-nyckeln som är konfigurerad på din DNS-server, t.ex. "hmac-sha256".
   tsig_keyname:
     name: TSIG-nyckelnamn
-    description: Namnet på TSIG-nyckeln enligt konfigurationen på din BIND-server.
+    description: Namnet på TSIG-nyckeln enligt konfigurationen på din DNS-server.
   tsig_secret:
     name: TSIG-hemlighet
-    description: Base64-hemligheten från "tsig-keygen" på din BIND-server.
+    description: Base64-hemligheten (TSIG-nyckeln) konfigurerad på din DNS-server.
   fqdn:
     name: Postens FQDN
-    description: Posten som denna app uppdaterar, fullt kvalificerad med avslutande punkt, t.ex. "home.dyn.example.com.".
+    description: Posten som denna app uppdaterar, t.ex. "home.dyn.example.com". Avslutande punkt krävs inte.
   zone:
     name: Zon
-    description: Zonen som posten tillhör, enligt BIND:s update-policy, t.ex. "dyn.example.com".
-  bind_server:
-    name: BIND-server
-    description: IP-adressen till din BIND-server. Uppdateringar skickas direkt dit över port 53.
+    description: Zonen som posten tillhör, enligt din DNS-servers update-policy, t.ex. "dyn.example.com".
+  dns_server:
+    name: DNS-server
+    description: IP-adressen till din DNS-server. Uppdateringar skickas direkt dit över port 53. Fungerar med vilken RFC 2136-kompatibel server som helst, inte bara BIND.
   ip_echo_url:
     name: IP-echo-URL
     description: En HTTP-endpoint som returnerar anroparens publika IP-adress som ren text.

@@ -26,8 +26,9 @@ See [ha_redirect/DOCS.md](ha_redirect/DOCS.md) for details and configuration.
 ### [DDNS Updater](ddns_updater/DOCS.md)
 
 Polls your current public IP and, when it changes, pushes an RFC 2136
-dynamic DNS update straight to your own authoritative BIND server - no
-third-party dynamic DNS provider involved.
+dynamic DNS update straight to your own authoritative DNS server (BIND,
+Knot, PowerDNS, Windows DNS Server, or anything else that speaks
+RFC 2136) - no third-party dynamic DNS provider involved.
 
 See [ddns_updater/DOCS.md](ddns_updater/DOCS.md) for details and configuration.
 

@@ -7,13 +7,18 @@ TSIG_KEYNAME=$(bashio::jq "${CONFIG}" '.tsig_keyname')
 TSIG_SECRET=$(bashio::jq "${CONFIG}" '.tsig_secret')
 FQDN=$(bashio::jq "${CONFIG}" '.fqdn')
 ZONE=$(bashio::jq "${CONFIG}" '.zone')
-BIND_SERVER=$(bashio::jq "${CONFIG}" '.bind_server')
+DNS_SERVER=$(bashio::jq "${CONFIG}" '.dns_server')
 IP_ECHO_URL=$(bashio::jq "${CONFIG}" '.ip_echo_url')
 POLL_INTERVAL=$(bashio::jq "${CONFIG}" '.poll_interval')
 
 KEY="${TSIG_ALG}:${TSIG_KEYNAME}:${TSIG_SECRET}"
 
-bashio::log.info "Polling ${IP_ECHO_URL} every ${POLL_INTERVAL}s, updating ${FQDN} in zone ${ZONE} on ${BIND_SERVER}"
+case "${FQDN}" in
+    *.) ;;
+    *) FQDN="${FQDN}." ;;
+esac
+
+bashio::log.info "Polling ${IP_ECHO_URL} every ${POLL_INTERVAL}s, updating ${FQDN} in zone ${ZONE} on ${DNS_SERVER}"
 
 while true; do
     NEWIP=$(curl -s --max-time 10 "${IP_ECHO_URL}" || true)
@@ -21,13 +26,13 @@ while true; do
     if [ -z "${NEWIP}" ]; then
         bashio::log.warning "Could not determine current public IP from ${IP_ECHO_URL}, skipping this cycle"
     else
-        CURIP=$(dig +short +time=5 "${FQDN}" @"${BIND_SERVER}" || true)
+        CURIP=$(dig +short +time=5 "${FQDN}" @"${DNS_SERVER}" || true)
 
         if [ "${NEWIP}" != "${CURIP}" ]; then
             bashio::log.info "IP changed: ${CURIP:-<none>} -> ${NEWIP}, sending update"
             if nsupdate <<EOF
 key ${KEY}
-server ${BIND_SERVER}
+server ${DNS_SERVER}
 zone ${ZONE}
 update delete ${FQDN} A
 update add ${FQDN} 300 A ${NEWIP}
