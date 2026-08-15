@@ -10,10 +10,10 @@ configuration:
     description: Base64-hemligheten (TSIG-nyckeln) konfigurerad på din DNS-server. Inget standardvärde - måste anges.
   fqdn:
     name: Postens FQDN
-    description: Posten som denna app uppdaterar. Avslutande punkt krävs inte. Standard: home.dyn.pal.pp.se.
+    description: Posten som denna app uppdaterar. Avslutande punkt krävs inte. Standard: home.dyn.example.com.
   zone:
     name: Zon
-    description: Zonen som posten tillhör, enligt din DNS-servers update-policy. Standard: dyn.pal.pp.se.
+    description: Zonen som posten tillhör, enligt din DNS-servers update-policy. Standard: dyn.example.com.
   dns_server:
     name: DNS-server
     description: IP-adressen till din DNS-server. Uppdateringar skickas direkt dit över port 53. Inget standardvärde - måste anges.

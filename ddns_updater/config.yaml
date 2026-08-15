@@ -13,8 +13,8 @@ options:
   tsig_algorithm: "hmac-sha256"
   tsig_keyname: "ddns-key"
   tsig_secret: ""
-  fqdn: "home.dyn.pal.pp.se."
-  zone: "dyn.pal.pp.se"
+  fqdn: "home.dyn.example.com."
+  zone: "dyn.example.com"
   dns_server: ""
   ip_echo_url: "http://ip.pal.st"
   poll_interval: 900
