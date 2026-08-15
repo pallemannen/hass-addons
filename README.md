@@ -23,6 +23,14 @@ You can also use it to forward any port anywhere, as long as the source port is 
 
 See [ha_redirect/DOCS.md](ha_redirect/DOCS.md) for details and configuration.
 
+### [DDNS Updater](ddns_updater/DOCS.md)
+
+Polls your current public IP and, when it changes, pushes an RFC 2136
+dynamic DNS update straight to your own authoritative DNS server - no
+third-party dynamic DNS provider involved.
+
+See [ddns_updater/DOCS.md](ddns_updater/DOCS.md) for details and configuration.
+
 ## License
 
 MIT - see [LICENSE](LICENSE).

@@ -1,0 +1,25 @@
+configuration:
+  tsig_algorithm:
+    name: TSIG Algorithm
+    description: Must match the algorithm of the TSIG key configured on your DNS server. Default: hmac-sha256.
+  tsig_keyname:
+    name: TSIG Key Name
+    description: The name of the TSIG key as configured on your DNS server. Default: ddns-key.
+  tsig_secret:
+    name: TSIG Secret
+    description: The base64 TSIG secret configured on your DNS server. No default - required.
+  fqdn:
+    name: Record FQDN
+    description: The record this add-on updates. A trailing dot isn't required. Default: home.dyn.example.com.
+  zone:
+    name: Zone
+    description: The zone that record lives in, as configured in your DNS server's update policy. Default: dyn.example.com.
+  dns_server:
+    name: DNS Server
+    description: Your DNS server's IP address. Updates are sent to it directly over port 53. No default - required.
+  ip_echo_url:
+    name: IP Echo URL
+    description: An HTTP endpoint that echoes back the caller's public IP as plain text. Default: http://ip.pal.st.
+  poll_interval:
+    name: Poll Interval
+    description: How often, in seconds, to check for an IP change (minimum 60). Default: 900.

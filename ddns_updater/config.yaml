@@ -1,0 +1,29 @@
+name: DDNS Updater
+version: "1.0.0"
+slug: ddns_updater
+description: Polls your public IP and pushes an RFC2136 dynamic DNS update to a remote authoritative DNS server when it changes.
+url: https://github.com/pallemannen/hass-addons/tree/main/ddns_updater
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: services
+boot: auto
+options:
+  tsig_algorithm: "hmac-sha256"
+  tsig_keyname: "ddns-key"
+  tsig_secret: ""
+  fqdn: "home.dyn.example.com."
+  zone: "dyn.example.com"
+  dns_server: ""
+  ip_echo_url: "http://ip.pal.st"
+  poll_interval: 900
+schema:
+  tsig_algorithm: str
+  tsig_keyname: str
+  tsig_secret: password
+  fqdn: str
+  zone: str
+  dns_server: str
+  ip_echo_url: url
+  poll_interval: "int(60,)"
