@@ -10,7 +10,7 @@ configuration:
     description: The base64 TSIG secret configured on your DNS server. No default - required.
   fqdn:
     name: Record FQDN
-    description: The record this add-on updates. A trailing dot isn't required. The zone is auto-detected via an SOA query - no need to specify it separately. Default: home.dyn.example.com.
+    description: The record this add-on updates. A trailing dot isn't required. Default: home.dyn.example.com.
   dns_server:
     name: DNS Server
     description: Your DNS server's IP address. Updates are sent to it directly over port 53. No default - required.
