@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.2
+- New icons
+  
 ## 1.0.1
 - Added icons
   
