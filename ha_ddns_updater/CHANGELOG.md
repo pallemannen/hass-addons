@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+- Removed the `zone` option. `nsupdate` auto-detects the zone via an SOA
+  query, so it no longer needs to be configured separately - one less
+  field to keep in sync with your DNS server.
+
 ## 1.0.2
 - New icons
   

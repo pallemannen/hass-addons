@@ -6,7 +6,6 @@ TSIG_ALG=$(bashio::jq "${CONFIG}" '.tsig_algorithm')
 TSIG_KEYNAME=$(bashio::jq "${CONFIG}" '.tsig_keyname')
 TSIG_SECRET=$(bashio::jq "${CONFIG}" '.tsig_secret')
 FQDN=$(bashio::jq "${CONFIG}" '.fqdn')
-ZONE=$(bashio::jq "${CONFIG}" '.zone')
 DNS_SERVER=$(bashio::jq "${CONFIG}" '.dns_server')
 IP_ECHO_URL=$(bashio::jq "${CONFIG}" '.ip_echo_url')
 POLL_INTERVAL=$(bashio::jq "${CONFIG}" '.poll_interval')
@@ -18,7 +17,7 @@ case "${FQDN}" in
     *) FQDN="${FQDN}." ;;
 esac
 
-bashio::log.info "Polling ${IP_ECHO_URL} every ${POLL_INTERVAL}s, updating ${FQDN} in zone ${ZONE} on ${DNS_SERVER}"
+bashio::log.info "Polling ${IP_ECHO_URL} every ${POLL_INTERVAL}s, updating ${FQDN} on ${DNS_SERVER}"
 
 while true; do
     NEWIP=$(curl -s --max-time 10 "${IP_ECHO_URL}" || true)
@@ -33,7 +32,6 @@ while true; do
             if nsupdate <<EOF
 key ${KEY}
 server ${DNS_SERVER}
-zone ${ZONE}
 update delete ${FQDN} A
 update add ${FQDN} 300 A ${NEWIP}
 send

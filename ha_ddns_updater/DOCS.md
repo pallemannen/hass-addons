@@ -58,11 +58,9 @@ set. Defaults: `hmac-sha256` / `ddns-key` / _(none)_.
 
 ### `fqdn`
 The record this add-on updates. A trailing dot isn't required - one is
-added automatically if missing. Default: `home.dyn.example.com.`.
-
-### `zone`
-The zone that record lives in, as configured in your DNS server's update
-policy. Default: `dyn.example.com`.
+added automatically if missing. The zone is auto-detected via an SOA query
+against `dns_server`, matching standard `nsupdate` behavior - no need to
+specify it separately. Default: `home.dyn.example.com.`.
 
 ### `dns_server`
 Your DNS server's IP address (a static/public one, since this add-on talks
