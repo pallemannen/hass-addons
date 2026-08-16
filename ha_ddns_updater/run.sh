@@ -10,7 +10,7 @@ DNS_SERVER=$(bashio::jq "${CONFIG}" '.dns_server')
 IP_ECHO_URL=$(bashio::jq "${CONFIG}" '.ip_echo_url')
 POLL_INTERVAL=$(bashio::jq "${CONFIG}" '.poll_interval')
 
-KEY="${TSIG_ALG}:${TSIG_KEYNAME}:${TSIG_SECRET}"
+KEY_NAME="${TSIG_ALG}:${TSIG_KEYNAME}"
 
 case "${FQDN}" in
     *.) ;;
@@ -30,7 +30,7 @@ while true; do
         if [ "${NEWIP}" != "${CURIP}" ]; then
             bashio::log.info "IP changed: ${CURIP:-<none>} -> ${NEWIP}, sending update"
             if nsupdate <<EOF
-key ${KEY}
+key ${KEY_NAME} ${TSIG_SECRET}
 server ${DNS_SERVER}
 update delete ${FQDN} A
 update add ${FQDN} 300 A ${NEWIP}
