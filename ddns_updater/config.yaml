@@ -1,5 +1,5 @@
 name: DDNS Updater
-version: "1.0.0"
+version: "1.0.1"
 slug: ddns_updater
 description: Polls your public IP and pushes an RFC2136 dynamic DNS update to a remote authoritative DNS server when it changes.
 url: https://github.com/pallemannen/hass-addons/tree/main/ddns_updater
