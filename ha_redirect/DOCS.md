@@ -60,7 +60,7 @@ around the app. For this, you need two things:
   the URL in the address field of your browser will give you a string similar
   to "a0d7b954_grafana". Replace the underscore with a dash, and you have the
   hostname of the app. Put "a0d7b954-grafana" into the `Target Host` field.
-  Note: That slug is tied to the repo the app was installed fromm, and is
+  Note: That slug is tied to the repo the app was installed from, and is
   the same in all HA installations, so any HA server running an app from 
   the same repo should be able to use the same slug.
   
