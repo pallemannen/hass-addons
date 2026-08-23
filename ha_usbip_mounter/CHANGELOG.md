@@ -22,3 +22,9 @@
 - Bump build base image from `20.0.1` to `21.0.2` - the old pin had drifted
   out of sync with current Alpine package repos, breaking the build with
   apk dependency conflicts (`openssl`/`libssl3`/`libcrypto3`, `musl`/`musl-dev`).
+
+## 1.5.5
+
+- Add field names/descriptions for the `devices` config (Server Address:
+  IP.AD.RE.SS syntax, Bus ID: X-X.X syntax) so they show up in the add-on's
+  Configuration UI instead of just raw schema.
