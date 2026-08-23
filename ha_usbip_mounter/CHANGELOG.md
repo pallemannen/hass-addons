@@ -16,3 +16,9 @@
   (e.g. after a `vhci_hcd: connection timed out with pending urbs` disconnect).
   Previously a dropped device required a manual add-on restart to recover,
   which also unnecessarily detached every other device the add-on manages.
+
+## 1.5.4
+
+- Bump build base image from `20.0.1` to `21.0.2` - the old pin had drifted
+  out of sync with current Alpine package repos, breaking the build with
+  apk dependency conflicts (`openssl`/`libssl3`/`libcrypto3`, `musl`/`musl-dev`).
