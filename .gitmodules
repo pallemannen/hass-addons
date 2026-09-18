@@ -1,0 +1,3 @@
+[submodule "ha_smartthings_pat_rotator/vendor/pat-rotator"]
+	path = ha_smartthings_pat_rotator/vendor/pat-rotator
+	url = https://github.com/TryTryAgain/SmartThings-PAT-Rotator.git
