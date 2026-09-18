@@ -1,0 +1,19 @@
+configuration:
+  samsung_email:
+    name: Samsung Email
+    description: Your Samsung account email. Used only to log in via a real browser session; not sent anywhere else.
+  samsung_password:
+    name: Samsung Password
+    description: Your Samsung account password.
+  samsung_totp_secret:
+    name: Samsung TOTP Secret
+    description: Only needed if your Samsung account uses TOTP (authenticator app) 2FA. Leave blank otherwise.
+  target_service:
+    name: Target Service
+    description: The domain.service to call with the new token, e.g. samsung_familyhub_fridge.update_pat. Default: samsung_familyhub_fridge.update_pat.
+  token_field:
+    name: Token Field
+    description: The field name the target service expects the token under. Default: token.
+  rotate_interval_hours:
+    name: Rotate Interval (hours)
+    description: How often to rotate the PAT, in hours. Must stay under the 24h expiry window. Default: 20.
