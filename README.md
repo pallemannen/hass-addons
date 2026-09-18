@@ -31,6 +31,16 @@ third-party dynamic DNS provider involved.
 
 See [ha_ddns_updater/DOCS.md](ha_ddns_updater/DOCS.md) for details and configuration.
 
+### [SmartThings PAT Rotator](ha_smartthings_pat_rotator/README.md)
+
+SmartThings deprecated indefinite Personal Access Tokens on 2024-12-30 - new
+PATs now expire after 24 hours. This add-on keeps one alive automatically by
+logging into `account.smartthings.com` via a headless browser on a
+schedule, generating a fresh PAT, and delivering it to a Home Assistant
+service of your choice.
+
+See [ha_smartthings_pat_rotator/README.md](ha_smartthings_pat_rotator/README.md) for details and configuration.
+
 ## License
 
 MIT - see [LICENSE](LICENSE).
