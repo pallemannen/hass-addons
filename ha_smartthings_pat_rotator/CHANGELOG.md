@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3
+- Added retry logic: a rotation attempt now retries up to 3 times (3
+  minutes apart) before falling back to the full `rotate_interval_hours`
+  wait. A confirmed real-world failure was a one-off `ERR_NETWORK_CHANGED`
+  during page load (page got stuck on its loading spinner, never
+  rendered the login form) - the page and URL were fine on a normal
+  retry, so losing a full ~20h cycle to a transient glitch wasn't
+  necessary.
+
 ## 0.1.2
 - Fixed a second missing-dependency issue: `pat_rotator.py` also requires
   `HA_TOKEN` to be set at import time (for its own unused
