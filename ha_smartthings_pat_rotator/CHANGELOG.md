@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.5
+- Fixed a YAML syntax error in `translations/en.yaml` that silently broke
+  every config field label/description in the UI, not just one: an
+  unquoted `Default: X.` mid-sentence is invalid YAML (a bare colon-space
+  inside a plain scalar reads as a new mapping key), so the whole file
+  failed to parse. Reworded to "Defaults to X." to avoid the embedded
+  colon.
+- Also clarified in the README and `tools/extract_samsung_cookies.py` that
+  logging into account.smartthings.com is required and account.samsung.com
+  is recommended (but unconfirmed as strictly necessary alone) before
+  re-seeding a session.
+
 ## 0.1.4
 - Added a `cookies_json` config option: paste the output of the new
   `tools/extract_samsung_cookies.py` (run on your own machine, reading

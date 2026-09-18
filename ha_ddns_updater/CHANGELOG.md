@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2
+- Fixed a YAML syntax error in `translations/en.yaml` and `translations/sv.yaml`
+  that silently broke every config field label/description in the UI, not
+  just one: an unquoted `Default: X.` / `Standard: X.` mid-sentence is
+  invalid YAML (a bare colon-space inside a plain scalar reads as a new
+  mapping key), so the whole file failed to parse. Reworded to
+  "Defaults to X."/"Standardvärde är X." to avoid the embedded colon.
+
 ## 1.1.1
 - Fixed TSIG key parsing: `nsupdate`'s `key` command takes the
   algorithm:keyname and the secret as two separate arguments, not one
