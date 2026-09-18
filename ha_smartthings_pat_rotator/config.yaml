@@ -1,0 +1,31 @@
+name: SmartThings PAT Rotator
+version: "0.1.0"
+slug: ha_smartthings_pat_rotator
+description: >
+  Automatically generates a fresh SmartThings Personal Access Token on a
+  schedule (Playwright browser automation against account.smartthings.com)
+  and delivers it to a Home Assistant service of your choice - since
+  SmartThings PATs expire after 24 hours.
+url: https://github.com/pallemannen/hass-addons/tree/main/ha_smartthings_pat_rotator
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: services
+boot: auto
+hassio_api: true
+homeassistant_api: true
+options:
+  samsung_email: ""
+  samsung_password: ""
+  samsung_totp_secret: ""
+  target_service: "samsung_familyhub_fridge.update_pat"
+  token_field: "token"
+  rotate_interval_hours: 20
+schema:
+  samsung_email: str
+  samsung_password: password
+  samsung_totp_secret: password
+  target_service: str
+  token_field: str
+  rotate_interval_hours: "int(1,72)"
