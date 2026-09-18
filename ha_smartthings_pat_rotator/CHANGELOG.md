@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.6
+- Fixed `cookies_json` not actually clearing itself after a successful
+  seed, despite the README claiming it does. Root cause: `POST
+  /addons/self/options` replaces the entire options object rather than
+  merging, so sending only `{"cookies_json": ""}` failed schema
+  validation ("Missing option 'samsung_email'...") - silently, since the
+  seed itself still succeeded and only the clear step errored. Now sends
+  the full current options with `cookies_json` overridden, confirmed
+  working via direct testing against a live add-on.
+
 ## 0.1.5
 - Fixed a YAML syntax error in `translations/en.yaml` that silently broke
   every config field label/description in the UI, not just one: an

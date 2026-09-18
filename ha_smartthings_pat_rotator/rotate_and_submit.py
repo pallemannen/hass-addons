@@ -64,7 +64,10 @@ def _cookies_to_storage_state(raw_cookies: list) -> dict:
     return {"cookies": cookies, "origins": []}
 
 
-def _clear_cookies_json_option() -> None:
+def _clear_cookies_json_option(options: dict) -> None:
+    # /addons/self/options replaces the whole options object, it doesn't
+    # merge - sending only the changed field fails schema validation
+    # ("Missing option 'samsung_email'..."), confirmed via direct testing.
     supervisor_token = os.environ["SUPERVISOR_TOKEN"]
     resp = requests.post(
         "http://supervisor/addons/self/options",
@@ -72,7 +75,7 @@ def _clear_cookies_json_option() -> None:
             "Authorization": f"Bearer {supervisor_token}",
             "Content-Type": "application/json",
         },
-        json={"options": {"cookies_json": ""}},
+        json={"options": {**options, "cookies_json": ""}},
         timeout=30,
     )
     resp.raise_for_status()
@@ -103,7 +106,7 @@ def maybe_seed_cookies_from_config(options: dict) -> None:
     )
 
     try:
-        _clear_cookies_json_option()
+        _clear_cookies_json_option(options)
     except Exception:
         log.exception(
             "Seeded the session but failed to clear the cookies_json option "
