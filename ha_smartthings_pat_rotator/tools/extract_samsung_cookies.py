@@ -2,9 +2,14 @@
 """Extract Chrome cookies for the Samsung/SmartThings login domains.
 
 Run this ON YOUR MACHINE (not in the HA container/add-on) - it reads your
-local Chrome cookie store, after you've logged into account.smartthings.com
-normally in that browser. Needs the browser_cookie3 package - on a
-Homebrew-managed Python, use a venv rather than a bare pip install:
+local Chrome cookie store, after logging into these in that browser:
+  - https://account.smartthings.com/ - required.
+  - https://account.samsung.com/ - recommended (SmartThings login is SSO
+    through the Samsung account, so this likely helps the session survive
+    longer; not confirmed to be strictly necessary on its own).
+
+Needs the browser_cookie3 package - on a Homebrew-managed Python, use a venv
+rather than a bare pip install:
 
     python3 -m venv ~/.venvs/cookie-extract
     source ~/.venvs/cookie-extract/bin/activate

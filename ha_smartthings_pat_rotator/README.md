@@ -29,9 +29,15 @@ accepts a PAT.
 2. Start the add-on.
 3. The very first run needs a logged-in browser session to succeed (Samsung's
    fraud detection blocks a cold automated login - see below), so seed one
-   before or right after starting: run `tools/extract_samsung_cookies.py` on
-   your own machine while logged into `account.smartthings.com` in Chrome,
-   then paste its output into the `cookies_json` config field and save.
+   before or right after starting:
+   - Log into [account.smartthings.com](https://account.smartthings.com/) in
+     Chrome - **required**.
+   - Also log into [account.samsung.com](https://account.samsung.com/) in
+     the same browser - **recommended**. SmartThings login is SSO through
+     the Samsung account, so this likely helps the session survive longer;
+     not confirmed to be strictly necessary on its own.
+   - Run `tools/extract_samsung_cookies.py` on your own machine, then paste
+     its output into the `cookies_json` config field and save.
 
 ## Session persistence & re-seeding
 
@@ -53,8 +59,10 @@ whatever inactivity/security policy Samsung applies - not yet known),
 rotation will start failing with a login/CAPTCHA/MFA error in the logs. To
 recover:
 
-1. Log into `account.smartthings.com` normally in Chrome, on your own
-   machine.
+1. Log into [account.smartthings.com](https://account.smartthings.com/) in
+   Chrome on your own machine - **required**. Also log into
+   [account.samsung.com](https://account.samsung.com/) in the same browser -
+   **recommended** (see Setup above for why).
 2. Run `tools/extract_samsung_cookies.py` there (see the script's own
    docstring for setup).
 3. Paste the resulting `samsung_cookies.json` contents into the add-on's
