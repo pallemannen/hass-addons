@@ -13,7 +13,20 @@ accepts a PAT.
 
 ## Setup
 
-1. Configure the add-on (Settings → Add-ons → SmartThings PAT Rotator → Configuration):
+Every run needs a logged-in browser session to succeed - Samsung's fraud
+detection blocks a cold automated login outright (see below) - so get that
+in hand before the first start, not after:
+
+1. Log into [account.smartthings.com](https://account.smartthings.com/) in
+   Chrome - **required**.
+2. Also log into [account.samsung.com](https://account.samsung.com/) in the
+   same browser - **recommended**. SmartThings login is SSO through the
+   Samsung account, so this likely helps the session survive longer; not
+   confirmed to be strictly necessary on its own.
+3. Run `tools/extract_samsung_cookies.py` on your own machine (see the
+   script's own docstring for setup) - this writes `samsung_cookies.json`.
+4. Configure the add-on (Settings → Add-ons → SmartThings PAT Rotator →
+   Configuration):
    - `samsung_email` / `samsung_password` - your Samsung account credentials.
      Used only to log in via a real browser session; not sent anywhere else.
    - `samsung_totp_secret` - only needed if your account uses TOTP
@@ -24,20 +37,10 @@ accepts a PAT.
      (default `token`).
    - `rotate_interval_hours` - how often to rotate (default 20, safely inside
      the 24h expiry window).
-   - `cookies_json` - leave blank initially; see "Session persistence &
-     re-seeding" below.
-2. Start the add-on.
-3. The very first run needs a logged-in browser session to succeed (Samsung's
-   fraud detection blocks a cold automated login - see below), so seed one
-   before or right after starting:
-   - Log into [account.smartthings.com](https://account.smartthings.com/) in
-     Chrome - **required**.
-   - Also log into [account.samsung.com](https://account.samsung.com/) in
-     the same browser - **recommended**. SmartThings login is SSO through
-     the Samsung account, so this likely helps the session survive longer;
-     not confirmed to be strictly necessary on its own.
-   - Run `tools/extract_samsung_cookies.py` on your own machine, then paste
-     its output into the `cookies_json` config field and save.
+   - `cookies_json` - paste the contents of `samsung_cookies.json` from step 3.
+5. Save, then start the add-on. The first run consumes and clears
+   `cookies_json` automatically, seeding a working session from the start
+   instead of failing on a cold login.
 
 ## Session persistence & re-seeding
 
