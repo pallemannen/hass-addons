@@ -51,11 +51,14 @@ browser can solve. There is no way around this other than starting from an
 actual logged-in browser session; device-recognition cookies alone (without
 an active session) are not enough either - this was tested directly.
 
-So instead, this add-on works by keeping a session alive rather than logging
-in from scratch each cycle: every successful rotation re-saves the browser's
-session (cookies) to `/data/browser_state.json`, refreshing it before the
-next run. As long as rotation keeps succeeding, this self-perpetuates
-indefinitely with no further action needed.
+The vendored login flow itself supports a full clean login (email, password,
+TOTP) from scratch every cycle just fine - it's Samsung's side that reliably
+blocks it in practice. So in practice this add-on only works by keeping a
+session alive rather than attempting a fresh login each cycle: every
+successful rotation re-saves the browser's session (cookies) to
+`/data/browser_state.json`, refreshing it before the next run. As long as
+rotation keeps succeeding, this self-perpetuates indefinitely with no
+further action needed.
 
 If that session ever does expire or get invalidated (a password change, or
 whatever inactivity/security policy Samsung applies - not yet known),
