@@ -11,6 +11,16 @@ PAT, and delivers it to a Home Assistant service of your choice.
 It doesn't assume any particular integration - point it at whatever service
 accepts a PAT.
 
+Built alongside [ibielopolskyi/smartthings_fridge_camera](https://github.com/ibielopolskyi/smartthings_fridge_camera)
+(Samsung FamilyHub Fridge), whose `update_pat` service is the default
+`target_service` example above - see
+[PR #45](https://github.com/ibielopolskyi/smartthings_fridge_camera/pull/45),
+open upstream at the time of writing, adding that service. Until it's
+merged, `update_pat` only exists on a locally patched install of that
+integration. The rotator's own login/token-generation logic is vendored
+from [TryTryAgain/SmartThings-PAT-Rotator](https://github.com/TryTryAgain/SmartThings-PAT-Rotator) -
+see "How it works" below.
+
 ## Setup
 
 Every run needs a logged-in browser session to succeed - Samsung's fraud
