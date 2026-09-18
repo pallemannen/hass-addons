@@ -13,6 +13,33 @@ logging.basicConfig(
 )
 log = logging.getLogger("run")
 
+# A single rotation attempt can fail for reasons that have nothing to do
+# with the login flow itself - a one-off network hiccup mid-page-load, for
+# example. Losing a full rotate_interval_hours cycle (default 20h) to that
+# is risky given PATs expire after 24h, so retry a few times, a short wait
+# apart, before actually falling back to the long sleep.
+RETRY_ATTEMPTS = 3
+RETRY_DELAY_SECONDS = 180
+
+
+async def rotate_with_retries() -> bool:
+    for attempt in range(1, RETRY_ATTEMPTS + 1):
+        try:
+            await rotate_once()
+            return True
+        except Exception:
+            log.exception(
+                "PAT rotation attempt %s/%s failed", attempt, RETRY_ATTEMPTS
+            )
+            if attempt < RETRY_ATTEMPTS:
+                log.info("Retrying in %s seconds...", RETRY_DELAY_SECONDS)
+                await asyncio.sleep(RETRY_DELAY_SECONDS)
+    log.error(
+        "All %s rotation attempts failed - giving up until next cycle",
+        RETRY_ATTEMPTS,
+    )
+    return False
+
 
 async def main() -> None:
     with open("/data/options.json") as f:
@@ -20,10 +47,7 @@ async def main() -> None:
     interval_seconds = interval_hours * 3600
 
     while True:
-        try:
-            await rotate_once()
-        except Exception:
-            log.exception("PAT rotation failed - will retry next cycle")
+        await rotate_with_retries()
         log.info("Sleeping %s hours until next rotation", interval_hours)
         await asyncio.sleep(interval_seconds)
 
