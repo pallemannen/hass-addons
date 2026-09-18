@@ -17,3 +17,6 @@ configuration:
   rotate_interval_hours:
     name: Rotate Interval (hours)
     description: How often to rotate the PAT, in hours. Must stay under the 24h expiry window. Default: 20.
+  cookies_json:
+    name: Cookies JSON
+    description: Paste the raw output of extract_samsung_cookies.py here to (re)seed a logged-in browser session - needed whenever the current session expires and rotation starts failing. Consumed and cleared automatically after use. Leave blank normally.

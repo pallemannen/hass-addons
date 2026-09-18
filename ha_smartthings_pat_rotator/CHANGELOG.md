@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.4
+- Added a `cookies_json` config option: paste the output of the new
+  `tools/extract_samsung_cookies.py` (run on your own machine, reading
+  Chrome's cookie store) to (re)seed a logged-in browser session. Consumed
+  and cleared automatically after use.
+- This exists because direct testing confirmed Samsung's login flow reliably
+  blocks a fully cold, cookie-less automated login (a real reCAPTCHA or
+  phone-push MFA challenge every time) - device-recognition cookies alone,
+  without an active session, aren't sufficient either. A real session has to
+  originate from an actual logged-in browser; this add-on can only keep one
+  alive (self-refreshing it on every successful rotation), not create one
+  from nothing.
+- README expanded with a "Session persistence & re-seeding" section
+  documenting this and the recovery steps.
+
 ## 0.1.3
 - Added retry logic: a rotation attempt now retries up to 3 times (3
   minutes apart) before falling back to the full `rotate_interval_hours`

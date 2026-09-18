@@ -24,7 +24,43 @@ accepts a PAT.
      (default `token`).
    - `rotate_interval_hours` - how often to rotate (default 20, safely inside
      the 24h expiry window).
+   - `cookies_json` - leave blank initially; see "Session persistence &
+     re-seeding" below.
 2. Start the add-on.
+3. The very first run needs a logged-in browser session to succeed (Samsung's
+   fraud detection blocks a cold automated login - see below), so seed one
+   before or right after starting: run `tools/extract_samsung_cookies.py` on
+   your own machine while logged into `account.smartthings.com` in Chrome,
+   then paste its output into the `cookies_json` config field and save.
+
+## Session persistence & re-seeding
+
+Samsung's login flow reliably blocks a fully cold, cookie-less automated
+login - confirmed through direct testing, it triggers a real reCAPTCHA
+challenge or a phone-push MFA prompt every time, neither of which a headless
+browser can solve. There is no way around this other than starting from an
+actual logged-in browser session; device-recognition cookies alone (without
+an active session) are not enough either - this was tested directly.
+
+So instead, this add-on works by keeping a session alive rather than logging
+in from scratch each cycle: every successful rotation re-saves the browser's
+session (cookies) to `/data/browser_state.json`, refreshing it before the
+next run. As long as rotation keeps succeeding, this self-perpetuates
+indefinitely with no further action needed.
+
+If that session ever does expire or get invalidated (a password change, or
+whatever inactivity/security policy Samsung applies - not yet known),
+rotation will start failing with a login/CAPTCHA/MFA error in the logs. To
+recover:
+
+1. Log into `account.smartthings.com` normally in Chrome, on your own
+   machine.
+2. Run `tools/extract_samsung_cookies.py` there (see the script's own
+   docstring for setup).
+3. Paste the resulting `samsung_cookies.json` contents into the add-on's
+   `cookies_json` config field and save.
+4. Restart the add-on (or wait for the next retry) - it consumes the pasted
+   cookies, seeds a fresh session, and clears the field automatically.
 
 ## How it works
 
@@ -40,7 +76,12 @@ accepts a PAT.
 
 ## Troubleshooting
 
-If login starts failing, run the add-on with debug logging and check for a
-Samsung UI change breaking Playwright's selectors - see the vendored
-`pat_rotator.py`'s own troubleshooting notes for the `--debug` flag and
-`--clear-state` option (invoke by shelling into the add-on container).
+If login starts failing, the most likely cause by far is an expired session -
+see "Session persistence & re-seeding" above and check the logs for a
+CAPTCHA/MFA-shaped error (e.g. `Could not find password input`,
+`Login may have failed`). Re-seeding via `cookies_json` fixes this.
+
+If that's not it, check for a Samsung UI change breaking Playwright's
+selectors - see the vendored `pat_rotator.py`'s own troubleshooting notes for
+the `--debug` flag and `--clear-state` option (invoke by shelling into the
+add-on container).

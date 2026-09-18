@@ -1,5 +1,5 @@
 name: SmartThings PAT Rotator
-version: "0.1.3"
+version: "0.1.4"
 slug: ha_smartthings_pat_rotator
 description: >
   Automatically generates a fresh SmartThings Personal Access Token on a
@@ -22,6 +22,7 @@ options:
   target_service: "samsung_familyhub_fridge.update_pat"
   token_field: "token"
   rotate_interval_hours: 20
+  cookies_json: ""
 schema:
   samsung_email: str
   samsung_password: password
@@ -29,3 +30,4 @@ schema:
   target_service: str
   token_field: str
   rotate_interval_hours: "int(1,72)"
+  cookies_json: str
