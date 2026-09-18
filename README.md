@@ -41,6 +41,15 @@ service of your choice.
 
 See [ha_smartthings_pat_rotator/README.md](ha_smartthings_pat_rotator/README.md) for details and configuration.
 
+### [HA USBIP Mounter](ha_usbip_mounter/DOCS.md)
+
+USBIP client add-on to manage mounting USBIP devices to Home Assistant.
+Temporary fork of [irakhlin/hassio-addons](https://github.com/irakhlin/hassio-addons)'s
+`usbip-mounter-patched`, carrying a fix (auto re-attach on dropped USBIP
+connections) that hasn't been merged upstream yet.
+
+See [ha_usbip_mounter/DOCS.md](ha_usbip_mounter/DOCS.md) for details and configuration.
+
 ## License
 
 MIT - see [LICENSE](LICENSE).
