@@ -42,8 +42,13 @@ async def rotate_once() -> None:
     options = load_options()
 
     # pat_rotator.py reads these from the environment at import time.
+    # SAMSUNG_EMAIL/PASSWORD are the only ones we actually use (run_browser()
+    # only needs these). HA_TOKEN is also required at import time even though
+    # we never call push_token_to_ha() - it just needs to exist as a string,
+    # its value is irrelevant to the code path we actually use.
     os.environ["SAMSUNG_EMAIL"] = options["samsung_email"]
     os.environ["SAMSUNG_PASSWORD"] = options["samsung_password"]
+    os.environ.setdefault("HA_TOKEN", "unused")
     if options.get("samsung_totp_secret"):
         os.environ["SAMSUNG_TOTP_SECRET"] = options["samsung_totp_secret"]
 

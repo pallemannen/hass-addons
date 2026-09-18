@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2
+- Fixed a second missing-dependency issue: `pat_rotator.py` also requires
+  `HA_TOKEN` to be set at import time (for its own unused
+  `push_token_to_ha()`), which we never set since we don't use that
+  function. Set to a harmless placeholder before import - verified with a
+  build that exercises the exact same env-setup path `rotate_once()` uses.
+
 ## 0.1.1
 - Fixed missing `aiohttp` and `playwright` Python packages - the base
   image only provides Chromium and its system dependencies, not these
