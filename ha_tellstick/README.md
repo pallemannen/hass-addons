@@ -22,6 +22,10 @@ See [DOCS.md](DOCS.md) for full configuration details.
 
 For more details, please check the TellStick [protocol list][protocol-list].
 
+## License
+
+Apache License 2.0, inherited from upstream - see [LICENSE](LICENSE).
+
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [protocol-list]: http://developer.telldus.com/wiki/TellStick_conf
