@@ -1,10 +1,12 @@
 """Generate a fresh SmartThings PAT and deliver it to a configured HA service.
 
-Deliberately does NOT modify pat_rotator.py (vendored unmodified from
-https://github.com/TryTryAgain/SmartThings-PAT-Rotator as a git submodule).
-Its own push_token_to_ha()/main() write to an input_text helper - we don't
-use either, we just call run_browser() directly and deliver the result
-ourselves via a proper HA service call instead.
+pat_rotator.py is vendored as a git submodule from
+https://github.com/pallemannen/SmartThings-PAT-Rotator (a fork of
+TryTryAgain/SmartThings-PAT-Rotator with reliability fixes - see that
+repo's own history). Its own push_token_to_ha()/main() write to an
+input_text helper - we don't use either, we just call run_browser()
+directly and deliver the result ourselves via a proper HA service call
+instead.
 """
 import json
 import logging
@@ -16,6 +18,58 @@ import requests
 log = logging.getLogger("rotate_and_submit")
 
 STATE_FILE = Path(os.environ.get("STATE_FILE", "/data/browser_state.json"))
+
+REAUTH_NOTIFICATION_ID = "smartthings_pat_rotator_reauth"
+
+# These specific error messages (raised by pat_rotator.py's do_login()) only
+# happen when Samsung's fraud detection has decided the saved session is no
+# longer trustworthy and throws a real CAPTCHA/MFA challenge instead of
+# proceeding to the password field - confirmed via a debug screenshot.
+# Retrying does not help this case (same dead session, same challenge every
+# time); only a fresh cookie re-seed from a real logged-in browser fixes it.
+REAUTH_ERROR_SIGNATURES = (
+    "Could not find email input",
+    "Could not find password input",
+    "Login may have failed",
+)
+
+
+def is_reauth_required(exc: Exception) -> bool:
+    return any(sig in str(exc) for sig in REAUTH_ERROR_SIGNATURES)
+
+
+def alert_reauth_needed(exc: Exception) -> None:
+    call_ha_service(
+        "persistent_notification.create",
+        {
+            "title": "SmartThings PAT Rotator needs re-authentication",
+            "message": (
+                "Samsung blocked automated login with a CAPTCHA or MFA "
+                "challenge - the saved browser session has expired, and "
+                "retrying won't help.\n\n"
+                f"Error: {exc}\n\n"
+                "To fix: log into account.smartthings.com (and, "
+                "recommended, account.samsung.com too) in a real browser, "
+                "run `tools/extract_samsung_cookies.py`, and paste its "
+                "output into this add-on's `cookies_json` config option, "
+                "then restart it."
+            ),
+            "notification_id": REAUTH_NOTIFICATION_ID,
+        },
+    )
+
+
+def dismiss_reauth_alert() -> None:
+    # Best-effort cleanup, called right after a successful rotation - must
+    # never turn a working rotation into a reported failure just because
+    # there was nothing to dismiss.
+    try:
+        call_ha_service(
+            "persistent_notification.dismiss",
+            {"notification_id": REAUTH_NOTIFICATION_ID},
+        )
+    except Exception:
+        log.debug("Nothing to dismiss (or dismiss failed) - ignoring", exc_info=True)
 
 
 def load_options() -> dict:

@@ -4,7 +4,12 @@ import asyncio
 import json
 import logging
 
-from rotate_and_submit import rotate_once
+from rotate_and_submit import (
+    alert_reauth_needed,
+    dismiss_reauth_alert,
+    is_reauth_required,
+    rotate_once,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,11 +31,24 @@ async def rotate_with_retries() -> bool:
     for attempt in range(1, RETRY_ATTEMPTS + 1):
         try:
             await rotate_once()
+            dismiss_reauth_alert()
             return True
-        except Exception:
+        except Exception as exc:
             log.exception(
                 "PAT rotation attempt %s/%s failed", attempt, RETRY_ATTEMPTS
             )
+            if is_reauth_required(exc):
+                # A dead/CAPTCHA-blocked session fails identically every
+                # time - burning the remaining attempts and their delays
+                # against it wastes time without changing the outcome.
+                # Only a human re-seeding fresh cookies fixes this, so
+                # alert immediately instead of retrying blindly.
+                log.error(
+                    "Session needs re-authentication - alerting instead of "
+                    "retrying against the same dead session"
+                )
+                alert_reauth_needed(exc)
+                return False
             if attempt < RETRY_ATTEMPTS:
                 log.info("Retrying in %s seconds...", RETRY_DELAY_SECONDS)
                 await asyncio.sleep(RETRY_DELAY_SECONDS)
