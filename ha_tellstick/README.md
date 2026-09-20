@@ -18,6 +18,8 @@ work with TellStick.
 
 Fork of https://github.com/michaelarnauts/home-assistant-tellstick-addon with uart: true to make the add-on app work for the original non-Duo TellStick device.
 
+See [DOCS.md](DOCS.md) for full configuration details.
+
 For more details, please check the TellStick [protocol list][protocol-list].
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
