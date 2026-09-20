@@ -35,7 +35,16 @@ REAUTH_ERROR_SIGNATURES = (
 
 
 def is_reauth_required(exc: Exception) -> bool:
-    return any(sig in str(exc) for sig in REAUTH_ERROR_SIGNATURES)
+    message = str(exc)
+    if "chrome-error://" in message:
+        # A browser-internal error page (from a network-changed navigation
+        # failure landing on chrome-error://chromewebdata/, for example)
+        # raises the exact same "Could not find email input" text as a
+        # real Samsung CAPTCHA block, but it's a transient, unrelated
+        # cause - confirmed live, this misfired the reauth alert for a
+        # plain network hiccup. Re-seeding cookies wouldn't have fixed it.
+        return False
+    return any(sig in message for sig in REAUTH_ERROR_SIGNATURES)
 
 
 def alert_reauth_needed(exc: Exception) -> None:

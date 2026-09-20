@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.8
+- Fixed the network-changed retry from 0.1.7: it only caught a thrown
+  exception, but a network change mid-redirect (SmartThings -> Samsung's
+  OAuth authorize URL) doesn't always make `page.goto()` raise - confirmed
+  live via a real outage, Playwright let the navigation "complete" by
+  landing on Chrome's own internal `chrome-error://chromewebdata/` page
+  instead, so the retry never triggered and the run failed 32s later
+  trying to find an email field on a page that could never have one.
+  `goto_with_retry()` (in the `pallemannen/SmartThings-PAT-Rotator` fork)
+  now also checks the landed URL and retries on a `chrome-error://` page,
+  not just a thrown exception.
+- Also fixed a related false-positive: the reauth-needed alert misfired
+  on this same network-changed failure, because landing on
+  `chrome-error://chromewebdata/` raises the exact same "Could not find
+  email input" text as a real Samsung CAPTCHA block. `is_reauth_required()`
+  now excludes any error whose message references a `chrome-error://`
+  page - that's a transient navigation failure, not a dead session.
+
 ## 0.1.7
 - `pat_rotator.py`'s vendored submodule now points at
   `pallemannen/SmartThings-PAT-Rotator` (a fork of the original
