@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.7
+- `pat_rotator.py`'s vendored submodule now points at
+  `pallemannen/SmartThings-PAT-Rotator` (a fork of the original
+  `TryTryAgain/SmartThings-PAT-Rotator`) with two reliability fixes:
+  retry `page.goto()` on a transient `net::ERR_NETWORK_CHANGED`, and wait
+  up to 15s (was 5s) per selector for the "Generate new token" button,
+  since the tokens page can still be mid-render (loading spinner) when
+  `networkidle` fires - confirmed via a debug screenshot.
+- Added detection for the one failure mode neither of the above can fix:
+  Samsung blocking login with a real CAPTCHA/MFA challenge because the
+  saved session is no longer trusted. Retrying that is pointless (same
+  dead session, same challenge every time), so instead of burning the
+  remaining retry attempts it now fires a persistent notification
+  telling you to re-seed `cookies_json`, and clears that notification
+  automatically on the next successful rotation.
+
 ## 0.1.6
 - Fixed `cookies_json` not actually clearing itself after a successful
   seed, despite the README claiming it does. Root cause: `POST
