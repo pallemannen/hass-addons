@@ -11,6 +11,12 @@
   `goto_with_retry()` (in the `pallemannen/SmartThings-PAT-Rotator` fork)
   now also checks the landed URL and retries on a `chrome-error://` page,
   not just a thrown exception.
+- Also fixed a related false-positive: the reauth-needed alert misfired
+  on this same network-changed failure, because landing on
+  `chrome-error://chromewebdata/` raises the exact same "Could not find
+  email input" text as a real Samsung CAPTCHA block. `is_reauth_required()`
+  now excludes any error whose message references a `chrome-error://`
+  page - that's a transient navigation failure, not a dead session.
 
 ## 0.1.7
 - `pat_rotator.py`'s vendored submodule now points at
