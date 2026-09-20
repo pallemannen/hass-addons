@@ -12,7 +12,7 @@ A collection of Home Assistant Supervisor add-ons.
 
 ## Add-ons
 
-### [HA Redirect](ha_redirect/DOCS.md)
+### [HA Redirect](ha_redirect)
 
 HA Redirect
 HA Redirect is a general purpose port forwarder for Home Assistant.
@@ -23,7 +23,7 @@ You can also use it to forward any port anywhere, as long as the source port is 
 
 See [ha_redirect/DOCS.md](ha_redirect/DOCS.md) for details and configuration.
 
-### [DDNS Updater](ha_ddns_updater/DOCS.md)
+### [DDNS Updater](ha_ddns_updater)
 
 Polls your current public IP and, when it changes, pushes an RFC 2136
 dynamic DNS update straight to your own authoritative DNS server - no
@@ -31,7 +31,7 @@ third-party dynamic DNS provider involved.
 
 See [ha_ddns_updater/DOCS.md](ha_ddns_updater/DOCS.md) for details and configuration.
 
-### [SmartThings PAT Rotator](ha_smartthings_pat_rotator/README.md)
+### [SmartThings PAT Rotator](ha_smartthings_pat_rotator)
 
 SmartThings deprecated indefinite Personal Access Tokens on 2024-12-30 - new
 PATs now expire after 24 hours. This add-on keeps one alive automatically by
@@ -41,7 +41,7 @@ service of your choice.
 
 See [ha_smartthings_pat_rotator/README.md](ha_smartthings_pat_rotator/README.md) for details and configuration.
 
-### [TellStick](ha_tellstick/DOCS.md)
+### [TellStick](ha_tellstick)
 
 This add-on wraps around the `telldus-core` package to expose a service
 for your TellStick and TellStick Duo.
