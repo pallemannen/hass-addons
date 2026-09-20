@@ -1,0 +1,22 @@
+configuration:
+  samsung_email:
+    name: Samsung-e-post
+    description: Din Samsung-kontos e-postadress. Används endast för att logga in via en riktig webbläsarsession; skickas inte någon annanstans.
+  samsung_password:
+    name: Samsung-lösenord
+    description: Ditt Samsung-kontos lösenord.
+  samsung_totp_secret:
+    name: Samsung TOTP-hemlighet
+    description: Behövs endast om ditt Samsung-konto använder TOTP (autentiseringsapp) som tvåfaktorsautentisering. Lämna tomt annars.
+  target_service:
+    name: Måltjänst
+    description: domän.tjänst att anropa med den nya token, t.ex. samsung_familyhub_fridge.update_pat. Standard är samsung_familyhub_fridge.update_pat.
+  token_field:
+    name: Token-fält
+    description: Fältnamnet som måltjänsten förväntar sig token under. Standard är token.
+  rotate_interval_hours:
+    name: Rotationsintervall (timmar)
+    description: Hur ofta token ska roteras, i timmar. Måste vara under 24-timmarsgränsen. Standard är 20.
+  cookies_json:
+    name: Cookies JSON
+    description: Klistra in den råa utdatan från extract_samsung_cookies.py här för att (åter)skapa en inloggad webbläsarsession - behövs när den nuvarande sessionen upphör och rotationen börjar misslyckas. Konsumeras och rensas automatiskt efter användning. Lämna tomt normalt.
