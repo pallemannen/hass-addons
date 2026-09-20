@@ -1,5 +1,5 @@
 name: SmartThings PAT Rotator
-version: "0.1.10"
+version: "0.1.11"
 slug: ha_smartthings_pat_rotator
 description: >
   Automatically generates a fresh SmartThings Personal Access Token on a
