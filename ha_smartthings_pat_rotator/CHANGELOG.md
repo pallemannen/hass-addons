@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.9
+- Added the missing LICENSE, logo.png, and Swedish translation, and
+  split the README into a short overview + DOCS.md, matching the other
+  add-ons in this repo. No functional change.
+
 ## 0.1.8
 - Fixed the network-changed retry from 0.1.7: it only caught a thrown
   exception, but a network change mid-redirect (SmartThings -> Samsung's

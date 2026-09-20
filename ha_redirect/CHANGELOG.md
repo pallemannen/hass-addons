@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2
+- Fixed the install badge to use the add-on's actual slug instead of a
+  stale repository-hash-prefixed one.
+
 ## 1.1.1
 - Fixed a bug reading the configuration options.
 
