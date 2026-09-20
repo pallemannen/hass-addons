@@ -40,16 +40,3 @@ schedule, generating a fresh PAT, and delivering it to a Home Assistant
 service of your choice.
 
 See [ha_smartthings_pat_rotator/README.md](ha_smartthings_pat_rotator/README.md) for details and configuration.
-
-## Retired
-
-**HA USBIP Mounter** - was a temporary fork of [irakhlin/hassio-addons](https://github.com/irakhlin/hassio-addons)'s
-`usbip-mounter-patched`, carrying an auto-reattach fix that hadn't been
-merged upstream yet. That fix (and a couple of smaller ones) has since been
-merged and released upstream (v1.5.4) - removed 2026-09-18. Use
-[irakhlin/hassio-addons](https://github.com/irakhlin/hassio-addons)'s
-`usbip-mounter-patched` directly instead.
-
-## License
-
-MIT - see [LICENSE](LICENSE).
