@@ -43,9 +43,10 @@ See [ha_smartthings_pat_rotator/README.md](ha_smartthings_pat_rotator/README.md)
 
 ### [TellStick](ha_tellstick/DOCS.md)
 
-Fork of [michaelarnauts/home-assistant-tellstick-addon](https://github.com/michaelarnauts/home-assistant-tellstick-addon)
-with one fix applied (`uart: true`, so a non-Duo TellStick's serial device
-is actually passed through) - upstream is unmaintained, so this is the
-fix's permanent home rather than a fork waiting on a merge.
+This add-on wraps around the `telldus-core` package to expose a service
+for your TellStick and TellStick Duo.
+
+This integration allows users to add switches, lights, and sensors which are
+communicating with 433 MHz.
 
 See [ha_tellstick/DOCS.md](ha_tellstick/DOCS.md) for details and configuration.
