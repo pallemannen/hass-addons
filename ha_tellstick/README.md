@@ -1,21 +1,6 @@
 # Home Assistant Add-on: TellStick
 
-> [!NOTE]
-> Fork of [michaelarnauts/home-assistant-tellstick-addon][upstream] with one
-> fix applied: `uart: true`, so a non-Duo TellStick's serial device actually
-> gets passed through. Upstream's own dependency is abandoned and the
-> maintainer isn't accepting further issues or PRs (see their own deprecation
-> notice below), so this fix lives here instead of waiting on a merge that
-> likely won't happen. The fix is offered upstream as
-> [michaelarnauts/home-assistant-tellstick-addon#1][upstream-pr] regardless,
-> in case that ever changes.
-
-> [!CAUTION]
-> **Upstream deprecation notice** (from the original project)
-> The library this add-on depends on is abandoned. Its last activity was 5
-> years ago and it cannot be built on Alpine versions above 3.15. Users can
-> continue using the add-on, but no issues or pull requests will be accepted
-> upstream.
+[![Open your Home Assistant instance and show the dashboard of an app.](https://my.home-assistant.io/badges/supervisor_addon.svg)](https://my.home-assistant.io/redirect/supervisor_addon/?repository_url=https%3A%2F%2Fgithub.com%2Fpallemannen%2Fhass-addons&addon=ha_ddns_updater)
 
 TellStick and TellStick Duo service.
 
@@ -30,6 +15,8 @@ This integration allows users to add switches, lights, and sensors which are
 communicating with 433 MHz. There are a number of vendors (Capidi Elro,
 Intertechno, Nexa, Proove, Sartano, and Viking) who are selling products that
 work with TellStick.
+
+Fork of https://github.com/michaelarnauts/home-assistant-tellstick-addon with uart: true to make the add-on app work for the original non-Duo TellStick device.
 
 For more details, please check the TellStick [protocol list][protocol-list].
 
