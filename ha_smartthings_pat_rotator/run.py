@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Entry point: rotate the SmartThings PAT on a schedule, forever."""
+"""Entry point: rotate the SmartThings PAT on a schedule, and ping the
+saved session hourly in between so it doesn't go idle-stale before the
+next rotation is even due."""
 import asyncio
 import json
 import logging
@@ -8,6 +10,7 @@ from rotate_and_submit import (
     alert_reauth_needed,
     dismiss_reauth_alert,
     is_reauth_required,
+    keep_alive_once,
     rotate_once,
 )
 
@@ -26,11 +29,19 @@ log = logging.getLogger("run")
 RETRY_ATTEMPTS = 3
 RETRY_DELAY_SECONDS = 180
 
+KEEP_ALIVE_INTERVAL_SECONDS = 3600
+
+# Rotation and the keep-alive ping both drive a Playwright browser against
+# the same saved session file (/data/browser_state.json) - serialize them
+# so a ping never overlaps a real rotation and races writing that file.
+browser_lock = asyncio.Lock()
+
 
 async def rotate_with_retries() -> bool:
     for attempt in range(1, RETRY_ATTEMPTS + 1):
         try:
-            await rotate_once()
+            async with browser_lock:
+                await rotate_once()
             dismiss_reauth_alert()
             return True
         except Exception as exc:
@@ -59,7 +70,7 @@ async def rotate_with_retries() -> bool:
     return False
 
 
-async def main() -> None:
+async def rotate_loop() -> None:
     with open("/data/options.json") as f:
         interval_hours = json.load(f)["rotate_interval_hours"]
     interval_seconds = interval_hours * 3600
@@ -68,6 +79,23 @@ async def main() -> None:
         await rotate_with_retries()
         log.info("Sleeping %s hours until next rotation", interval_hours)
         await asyncio.sleep(interval_seconds)
+
+
+async def keep_alive_loop() -> None:
+    while True:
+        await asyncio.sleep(KEEP_ALIVE_INTERVAL_SECONDS)
+        try:
+            async with browser_lock:
+                alive = await keep_alive_once()
+            log.info(
+                "Keep-alive ping: session %s", "still alive" if alive else "not active"
+            )
+        except Exception:
+            log.exception("Keep-alive ping failed")
+
+
+async def main() -> None:
+    await asyncio.gather(rotate_loop(), keep_alive_loop())
 
 
 if __name__ == "__main__":

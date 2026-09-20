@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.10
+- Added an hourly keep-alive ping alongside rotation: navigates to the
+  tokens page using the saved session and confirms it isn't bounced to
+  login, never generating a token. Aimed at the case where Samsung's
+  session validity depends on activity, not just elapsed time - the
+  vendored `pat_rotator.py` fork already had `run_keep_alive()` for this,
+  it just wasn't wired into the add-on's own loop before now. Shares a
+  lock with rotation so the two never touch `/data/browser_state.json`
+  at the same time.
+
 ## 0.1.9
 - Added the missing LICENSE, logo.png, and Swedish translation, and
   split the README into a short overview + DOCS.md, matching the other
