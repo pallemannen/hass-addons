@@ -40,3 +40,13 @@ schedule, generating a fresh PAT, and delivering it to a Home Assistant
 service of your choice.
 
 See [ha_smartthings_pat_rotator/README.md](ha_smartthings_pat_rotator/README.md) for details and configuration.
+
+### [TellStick](ha_tellstick/DOCS.md)
+
+This add-on wraps around the `telldus-core` package to expose a service
+for your TellStick and TellStick Duo.
+
+This integration allows users to add switches, lights, and sensors which are
+communicating with 433 MHz.
+
+See [ha_tellstick/DOCS.md](ha_tellstick/DOCS.md) for details and configuration.
