@@ -1,0 +1,7 @@
+---
+configuration:
+  devices:
+    name: Enheter
+    description: >-
+      Lägg till en eller flera enheter i tilläggets konfiguration för
+      varje enhet du vill lägga till.
