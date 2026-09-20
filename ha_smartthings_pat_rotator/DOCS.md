@@ -92,6 +92,9 @@ recover on its own. To recover:
   block - alert and stop retrying) from transient failures (a network blip,
   or the tokens page still rendering when checked - both retried
   automatically instead).
+- Between rotations, an hourly ping visits the tokens page (never generating
+  a token) just to keep the session from going idle - independent of
+  `rotate_interval_hours`.
 
 ## Troubleshooting
 
