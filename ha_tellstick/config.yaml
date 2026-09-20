@@ -1,5 +1,5 @@
 ---
-version: 2.2.2
+version: 2.2.3
 slug: ha_tellstick
 name: TellStick
 description: TellStick and TellStick Duo service
@@ -7,7 +7,7 @@ url: https://github.com/pallemannen/hass-addons/tree/main/ha_tellstick
 arch:
   - aarch64
   - amd64
-image: michaelarnauts/home-assistant-tellstick-addon
+image: michaelarnauts/home-assistant-tellstick-addon:2.2.1
 options:
   devices:
     - house: A
