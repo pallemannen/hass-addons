@@ -11,6 +11,7 @@ instead.
 import json
 import logging
 import os
+import time
 from pathlib import Path
 
 import requests
@@ -18,6 +19,9 @@ import requests
 log = logging.getLogger("rotate_and_submit")
 
 STATE_FILE = Path(os.environ.get("STATE_FILE", "/data/browser_state.json"))
+LAST_ROTATION_FILE = Path(
+    os.environ.get("LAST_ROTATION_FILE", "/data/last_rotation.json")
+)
 
 REAUTH_NOTIFICATION_ID = "smartthings_pat_rotator_reauth"
 
@@ -65,6 +69,22 @@ def alert_reauth_needed(exc: Exception) -> None:
             "notification_id": REAUTH_NOTIFICATION_ID,
         },
     )
+
+
+def record_rotation_time() -> None:
+    LAST_ROTATION_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(LAST_ROTATION_FILE, "w") as f:
+        json.dump({"rotated_at": time.time()}, f)
+
+
+def seconds_since_last_rotation() -> float | None:
+    """None if we've never successfully rotated (or the record is missing/
+    unreadable) - callers should treat that as "rotate now" to be safe."""
+    try:
+        with open(LAST_ROTATION_FILE) as f:
+            return time.time() - json.load(f)["rotated_at"]
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        return None
 
 
 def dismiss_reauth_alert() -> None:
@@ -202,6 +222,7 @@ async def rotate_once() -> None:
     token = await pat_rotator.run_browser(debug=False)
     log.info("Got a fresh PAT, delivering to %s", options["target_service"])
     call_ha_service(options["target_service"], {options["token_field"]: token})
+    record_rotation_time()
 
 
 async def keep_alive_once() -> bool:

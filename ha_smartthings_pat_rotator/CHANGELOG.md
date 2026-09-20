@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.12
+- A restart no longer forces an immediate rotation - it checks the current
+  PAT's age first and only rotates right away if it's actually due.
+
 ## 0.1.11
 - A CAPTCHA/MFA block now retries up to 3 times, an hour apart, before
   alerting - confirmed one clears on its own without a cookie reseed.

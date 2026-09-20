@@ -12,6 +12,7 @@ from rotate_and_submit import (
     is_reauth_required,
     keep_alive_once,
     rotate_once,
+    seconds_since_last_rotation,
 )
 
 logging.basicConfig(
@@ -89,6 +90,19 @@ async def rotate_loop() -> None:
     with open("/data/options.json") as f:
         interval_hours = json.load(f)["rotate_interval_hours"]
     interval_seconds = interval_hours * 3600
+
+    # A restart shouldn't force a fresh rotation against a PAT that's still
+    # well within its 24h life - only rotate immediately if it's actually
+    # due; otherwise wait out the rest of this cycle first.
+    elapsed = seconds_since_last_rotation()
+    if elapsed is not None and elapsed < interval_seconds:
+        remaining = interval_seconds - elapsed
+        log.info(
+            "Current PAT is only %.1fh old (interval is %sh) - waiting "
+            "%.1fh before rotating instead of rotating on startup",
+            elapsed / 3600, interval_hours, remaining / 3600,
+        )
+        await asyncio.sleep(remaining)
 
     while True:
         await rotate_with_retries()
