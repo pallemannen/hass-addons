@@ -1,7 +1,6 @@
 # Changelog
 
 ## 2.2.1
-
 - Forked from [michaelarnauts/home-assistant-tellstick-addon][upstream]
   (same version) and moved into this repo. Upstream is unmaintained (its
   dependency library is abandoned, no further issues or PRs accepted), and

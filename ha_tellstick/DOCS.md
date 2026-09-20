@@ -1,12 +1,6 @@
 # Home Assistant Add-on: TellStick
 
-Forked from [michaelarnauts/home-assistant-tellstick-addon][upstream], which
-the maintainer has marked as unmaintained (dependency library abandoned, no
-further issues or PRs accepted). This fork carries one fix on top of the
-last release: `uart: true`, so a non-Duo TellStick's `/dev/ttyUSB*` serial
-device actually gets passed through to the add-on container. Reuses the
-upstream project's own published Docker image unchanged - the fix is a pure
-Supervisor config option, nothing about the image itself needed to change.
+See [README.md](README.md) for background on this fork.
 
 ## Installation
 
