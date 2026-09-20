@@ -29,6 +29,14 @@ log = logging.getLogger("run")
 RETRY_ATTEMPTS = 3
 RETRY_DELAY_SECONDS = 180
 
+# A CAPTCHA/MFA-shaped block doesn't necessarily mean the session is dead -
+# confirmed live, one occurred and the very next hourly attempt went through
+# clean with no cookie reseed. So retry those too, an hour apart (cheap
+# against a 20h cadence), and only alert if it's still happening after
+# REAUTH_RETRY_ATTEMPTS in a row.
+REAUTH_RETRY_ATTEMPTS = 3
+REAUTH_RETRY_DELAY_SECONDS = 3600
+
 KEEP_ALIVE_INTERVAL_SECONDS = 3600
 
 # Rotation and the keep-alive ping both drive a Playwright browser against
@@ -38,36 +46,43 @@ browser_lock = asyncio.Lock()
 
 
 async def rotate_with_retries() -> bool:
-    for attempt in range(1, RETRY_ATTEMPTS + 1):
+    transient_attempt = 0
+    reauth_attempt = 0
+    while True:
         try:
             async with browser_lock:
                 await rotate_once()
             dismiss_reauth_alert()
             return True
         except Exception as exc:
-            log.exception(
-                "PAT rotation attempt %s/%s failed", attempt, RETRY_ATTEMPTS
-            )
+            log.exception("PAT rotation attempt failed")
             if is_reauth_required(exc):
-                # A dead/CAPTCHA-blocked session fails identically every
-                # time - burning the remaining attempts and their delays
-                # against it wastes time without changing the outcome.
-                # Only a human re-seeding fresh cookies fixes this, so
-                # alert immediately instead of retrying blindly.
-                log.error(
-                    "Session needs re-authentication - alerting instead of "
-                    "retrying against the same dead session"
+                reauth_attempt += 1
+                if reauth_attempt >= REAUTH_RETRY_ATTEMPTS:
+                    log.error(
+                        "CAPTCHA/MFA block persisted across %s attempts an "
+                        "hour apart - alerting instead of retrying further",
+                        REAUTH_RETRY_ATTEMPTS,
+                    )
+                    alert_reauth_needed(exc)
+                    return False
+                log.warning(
+                    "CAPTCHA/MFA block (%s/%s) - retrying in %s hour(s)",
+                    reauth_attempt,
+                    REAUTH_RETRY_ATTEMPTS,
+                    REAUTH_RETRY_DELAY_SECONDS // 3600,
                 )
-                alert_reauth_needed(exc)
+                await asyncio.sleep(REAUTH_RETRY_DELAY_SECONDS)
+                continue
+            transient_attempt += 1
+            if transient_attempt >= RETRY_ATTEMPTS:
+                log.error(
+                    "All %s rotation attempts failed - giving up until next cycle",
+                    RETRY_ATTEMPTS,
+                )
                 return False
-            if attempt < RETRY_ATTEMPTS:
-                log.info("Retrying in %s seconds...", RETRY_DELAY_SECONDS)
-                await asyncio.sleep(RETRY_DELAY_SECONDS)
-    log.error(
-        "All %s rotation attempts failed - giving up until next cycle",
-        RETRY_ATTEMPTS,
-    )
-    return False
+            log.info("Retrying in %s seconds...", RETRY_DELAY_SECONDS)
+            await asyncio.sleep(RETRY_DELAY_SECONDS)
 
 
 async def rotate_loop() -> None:

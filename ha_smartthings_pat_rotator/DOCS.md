@@ -98,12 +98,12 @@ recover on its own. To recover:
 
 ## Troubleshooting
 
-If login starts failing, the most likely cause by far is an expired session -
-see "Session persistence & re-seeding" above and check the logs for a
-CAPTCHA/MFA-shaped error (e.g. `Could not find password input`,
-`Login may have failed`). Re-seeding via `cookies_json` fixes this - you
-should also see a persistent notification in Home Assistant pointing at
-the same fix.
+A CAPTCHA/MFA-shaped error (e.g. `Could not find password input`,
+`Login may have failed`) retries up to 3 times, an hour apart, before
+concluding the session is actually dead. If you see the persistent
+notification in Home Assistant, that means it already retried and failed
+all 3 times - re-seed via `cookies_json` (see "Session persistence &
+re-seeding" above).
 
 If that's not it, check for a Samsung UI change breaking Playwright's
 selectors - see the vendored `pat_rotator.py`'s own troubleshooting notes for

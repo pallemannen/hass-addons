@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.11
+- A CAPTCHA/MFA block now retries up to 3 times, an hour apart, before
+  alerting - confirmed one clears on its own without a cookie reseed.
+
 ## 0.1.10
 - Added an hourly keep-alive ping alongside rotation: navigates to the
   tokens page using the saved session and confirms it isn't bounced to
