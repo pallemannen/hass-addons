@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.13
+- `tools/extract_samsung_cookies.py` now installs its one dependency,
+  browser_cookie3, into a private environment in
+  `~/.cache/extract_samsung_cookies/` on first run, so it works with any
+  Python 3, including Homebrew's, without pip or brew steps. No change to
+  the add-on itself.
+
 ## 0.1.12
 - A restart no longer forces an immediate rotation - it checks the current
   PAT's age first and only rotates right away if it's actually due.
