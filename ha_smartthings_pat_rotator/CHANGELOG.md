@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.14
+- Pasted `cookies_json` cookies are now seeded only once. Clearing the option
+  only reaches the running add-on after a restart, so until then every hourly
+  keep-alive and every rotation re-seeded the same pasted cookies, overwriting
+  the session the last login had refreshed. The add-on now remembers a hash of
+  the value it seeded (`/data/seeded_cookies.sha256`).
+
 ## 0.1.13
 - `tools/extract_samsung_cookies.py` now installs its one dependency,
   browser_cookie3, into a private environment in

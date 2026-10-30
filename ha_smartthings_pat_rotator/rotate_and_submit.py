@@ -8,6 +8,7 @@ input_text helper - we don't use either, we just call run_browser()
 directly and deliver the result ourselves via a proper HA service call
 instead.
 """
+import hashlib
 import json
 import logging
 import os
@@ -21,6 +22,13 @@ log = logging.getLogger("rotate_and_submit")
 STATE_FILE = Path(os.environ.get("STATE_FILE", "/data/browser_state.json"))
 LAST_ROTATION_FILE = Path(
     os.environ.get("LAST_ROTATION_FILE", "/data/last_rotation.json")
+)
+# SHA-256 of the last cookies_json value seeded. Clearing the option goes
+# through Supervisor, but the running add-on keeps reading the old
+# /data/options.json until it restarts, so without this every cycle re-seeded
+# the same stale cookies over the session rotation had refreshed.
+SEEDED_COOKIES_FILE = Path(
+    os.environ.get("SEEDED_COOKIES_FILE", "/data/seeded_cookies.sha256")
 )
 
 REAUTH_NOTIFICATION_ID = "smartthings_pat_rotator_reauth"
@@ -172,6 +180,10 @@ def maybe_seed_cookies_from_config(options: dict) -> None:
     if not raw:
         return
 
+    digest = hashlib.sha256(raw.encode()).hexdigest()
+    if SEEDED_COOKIES_FILE.exists() and SEEDED_COOKIES_FILE.read_text().strip() == digest:
+        return
+
     try:
         raw_cookies = json.loads(raw)
     except json.JSONDecodeError as e:
@@ -182,6 +194,7 @@ def maybe_seed_cookies_from_config(options: dict) -> None:
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     with open(STATE_FILE, "w") as f:
         json.dump(storage_state, f)
+    SEEDED_COOKIES_FILE.write_text(digest)
     log.info(
         "Seeded a new browser session from %d cookies pasted via config",
         len(storage_state["cookies"]),
