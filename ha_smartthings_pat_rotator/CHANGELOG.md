@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.15
+- No more secrets in the log. It used to show the full SmartThings token list
+  (every token's `authKey`) on each run, plus the TOTP code, the start of the
+  new PAT and SSO auth codes in redirect URLs. URLs are now logged without
+  their query strings, and browser console output only at debug level.
+
 ## 0.1.14
 - Pasted `cookies_json` cookies are now seeded only once. Clearing the option
   only reaches the running add-on after a restart, so until then every hourly
